@@ -109,5 +109,12 @@ input {
   border: none;
   cursor: pointer;
 }
+.calculator .options .time_step .post {
+  grid-column: span 2;
+}
+.calculator .options .time_step .del {
+  cursor: pointer;
+  user-select: none;
+}
 
 /*# sourceMappingURL=style.css.map */

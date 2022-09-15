@@ -129,6 +129,15 @@ input {
                 border: none;
                 cursor: pointer;
             }
+            .post {
+                grid-column: span 2;
+
+                
+            }
+            .del {
+                cursor: pointer;
+                user-select: none;
+            }
         }
     }
 }
