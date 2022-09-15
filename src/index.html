@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/jquery.min.js"></script>
     <title>Document</title>
 </head>
 
@@ -16,28 +18,58 @@
 
             </div>
             <div class="plot_day">
+                <canvas id="myChart" width="1112" height="356"></canvas>
             </div>
             <div class="plot_trende">
+                <!-- <canvas id="myChart_2" width="1112" height="356"></canvas> -->
             </div>
         </div>
         <div class="options">
-            <div class="battary">
-                <div class="tick">
-                    <p>Current</p><input type="text"><span>A</span>
-                </div>
-                <div class="tick">
-                    <p>Voltage</p><input type="text"><span>V</span>
-                </div>
-                <div class="tick">
-                    <p>Power</p><input readonly type="text"><span>W</span>
-                </div>
+            <form class="battary" name="battary">
+                <p>Battery</p>
+                <span>Voltage</span>
+                <input type="text" name="volt">
+                <span>V</span>
+                <span>Сapacity</span>
+                <input type="text" name="cap"
+                    onblur="document.battary.res.value = eval(document.battary.volt.value * document.battary.cap.value)">
+                <span>Ah</span>
+                <span>Power</span>
+                <input readonly type="text" name="res">
+                <span>kWh</span>
+            </form>
+
+            <form class="truck" name="truck">
+                <p>Truck</p>
+                <span>Power<br>consumption</span>
+                <input type="text" name="power_truck">
+                <span>kWh</span>
+            </form>
+
+            <form class="charger" name="charger">
+                <p>Charger</p>
+                <span>Charge rate</span>
+                <input type="text" name="ch_rate"
+                    onblur="document.charger.ch_curr.value = eval(document.charger.ch_rate.value * document.battary.cap.value)">
+                <span>C</span>
+                <span>Charge current</span>
+                <input type="text" name="ch_curr">
+                <span>A</span>
+            </form>
+
+            <div class="time_step">
+                <p>Время пауз</p>
+                <span>Start</span>
+                <span>Stop</span>
+                <button class="plus">Plus</button>
+                <input class="start" type="time">
+                <input class="stop" type="time">
+                <div class="stash"></div>
             </div>
-            <div class="track"></div>
-            <div class="charger"></div>
-            <div class="time_step"></div>
-            <input class="batton" type="sabmit" value="equel" />
+            <input class="button" type="sabmit" value="equel" />
         </div>
     </div>
+    <script src="js/script.js"></script>
 </body>
 
 </html>
