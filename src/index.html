@@ -19,7 +19,7 @@
 
             </div>
             <div class="plot_day">
-                <canvas id="myChart" width="1112" height="356"></canvas>
+                <canvas id="myChart" width="1112" height="316"></canvas>
             </div>
             <div class="plot_trende">
                 <!-- <canvas id="myChart_2" width="1112" height="356"></canvas> -->
@@ -28,32 +28,32 @@
         <div class="options">
             <form class="battary" name="battary">
                 <p>Battery</p>
-                <span>Voltage</span>
+                <span class="name_tick">Voltage</span>
                 <input type="text" name="volt">
                 <span>V</span>
-                <span>Сapacity</span>
+                <span class="name_tick">Сapacity</span>
                 <input type="text" name="cap"
                     onblur="document.battary.res.value = eval(document.battary.volt.value * document.battary.cap.value)">
                 <span>Ah</span>
-                <span>Power</span>
-                <input readonly type="text" name="res">
+                <span class="name_tick">Power</span>
+                <input readonly type="text" name="res" class="power_batt">
                 <span>kWh</span>
             </form>
 
             <form class="truck" name="truck">
                 <p>Truck</p>
-                <span>Power<br>consumption</span>
-                <input type="text" name="power_truck">
-                <span>kWh</span>
+                <span class="name_tick">Power</span>
+                <input type="text" name="power_truck" class="power_truck">
+                <span>kW</span>
             </form>
 
             <form class="charger" name="charger">
                 <p>Charger</p>
-                <span>Charge rate</span>
+                <span class="name_tick">Charge rate</span>
                 <input type="text" name="ch_rate"
                     onblur="document.charger.ch_curr.value = eval(document.charger.ch_rate.value * document.battary.cap.value)">
                 <span>C</span>
-                <span>Charge current</span>
+                <span class="name_tick">Charge current</span>
                 <input type="text" name="ch_curr">
                 <span>A</span>
             </form>
@@ -63,9 +63,9 @@
                 <span>Start</span>
                 <span>Stop</span>
                 <button class="plus">Plus</button>
-                <input class="start" id="start" type="time" value="">
-                <input class="stop" type="time">
-                <!-- <div class="stash" id="stash"></div> -->
+                <input class="start" required type="time">
+                <input class="stop" required type="time">
+                <div class="stash"></div>
             </div>
             <input class="equel" type="sabmit" value="equel" />
         </div>

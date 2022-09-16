@@ -8,6 +8,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: sans-serif;
 }
 
 input {
@@ -17,8 +18,7 @@ input {
 .calculator {
     display: flex;
     flex-direction: row;
-    border: 2px solid black;
-    height: 900px;
+    height: 800px;
     width: 1400px;
 
     .plot {
@@ -43,7 +43,7 @@ input {
             height: 40%;
             width: 100%;
 
-            
+
         }
 
         .plot_trende {
@@ -54,73 +54,118 @@ input {
     }
 
     .options {
-        display: grid;
-        overflow-y: scroll;
+        display: flex;
+        flex-direction: column;
+        // overflow-y: scroll;
         width: 20%;
-        border: 2px solid black;
+        background-color: rgb(255, 255, 255);
+
+        // color: white;
+        p {
+            display: grid;
+            grid-column: span 3;
+            place-items: center;
+            font-size: 16px;
+            font-weight: bold;
+            height: 30px;
+            min-width: 50px;
+        }
+
+        input {
+            width: 90%;
+            height: 30px;
+            text-align: end;
+            font-size: 16px;
+            font-family: sans-serif;
+            border: 1px solid white;
+            background: transparent;
+            box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        input:focus,
+        :hover,
+        :active {
+            outline: 0;
+            outline-offset: 0;
+        }
+
+        .name_tick {
+            width: 65px;
+        }
 
         .battary {
-            border: 2px solid rgb(14, 145, 162);
+            position: relative;
             display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
+            grid-template-columns: 1fr 3fr 1fr;
+            place-items: center;
+            border: 2px solid white;
+            border-radius: 5px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            min-height: 200px;
+            width: 90%;
+            margin-left: 5%;
+            margin-top: 5%;
+            padding: 5px;
 
-            p {
-                grid-column: span 3;
-            }
 
-            // span {
-
-            // }
-            input {
-                width: 100%;
-            }
         }
 
         .truck {
-            border: 2px solid yellowgreen;
+            position: relative;
             display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
+            grid-template-columns: 1fr 3fr 1fr;
+            place-items: center;
+            border: 2px solid white;
+            border-radius: 5px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            min-height: 100px;
+            width: 90%;
+            margin-left: 5%;
+            margin-top: 5%;
+            padding: 5px;
 
-            p {
-                grid-column: span 3;
-            }
-
-            input {
-                width: 100%;
-            }
         }
 
         .charger {
-            border: 2px solid blue;
+            position: relative;
             display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
+            grid-template-columns: 1fr 3fr 1fr;
+            place-items: center;
+            border: 2px solid white;
+            border-radius: 5px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            min-height: 150px;
+            width: 90%;
+            margin-left: 5%;
+            margin-top: 5%;
+            padding: 5px;
 
-            p {
-                grid-column: span 3;
-            }
 
-            input {
-                width: 100%;
-            }
         }
 
         .time_step {
+            position: relative;
             display: grid;
-
             grid-template-columns: 1fr 1fr 1fr;
-            border: 2px solid red;
+            place-items: center;
+            border: 2px solid white;
+            border-radius: 5px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            min-height: 150px;
+            width: 90%;
+            margin-left: 5%;
+            margin-top: 5%;
 
-            p {
-                grid-column: span 3;
-            }
-            input {
-                width: 100%;
-            }
             span {
                 display: grid;
                 width: 100%;
                 place-items: center;
             }
+
             .plus {
                 grid-row: span 2;
                 place-items: center;
@@ -129,15 +174,27 @@ input {
                 border: none;
                 cursor: pointer;
             }
-            .post {
-                grid-column: span 2;
 
-                
+            .stash {
+                display: grid;
+                // overflow-y: scroll;
+                grid-column: span 3;
+                width: 100%;
+
+                .post {
+                    grid-column: span 2;
+                }
+
+                .del {
+                    cursor: pointer;
+                    user-select: none;
+                }
             }
-            .del {
-                cursor: pointer;
-                user-select: none;
-            }
+        }
+
+        .equel {
+            position: relative;
+            bottom: 0;
         }
     }
 }

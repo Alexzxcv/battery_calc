@@ -8,6 +8,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: sans-serif;
 }
 
 input {
@@ -17,8 +18,7 @@ input {
 .calculator {
   display: flex;
   flex-direction: row;
-  border: 2px solid black;
-  height: 900px;
+  height: 800px;
   width: 1400px;
 }
 .calculator .plot {
@@ -47,54 +47,97 @@ input {
   width: 100%;
 }
 .calculator .options {
-  display: grid;
-  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
   width: 20%;
-  border: 2px solid black;
+  background-color: white;
+}
+.calculator .options p {
+  display: grid;
+  grid-column: span 3;
+  place-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  height: 30px;
+  min-width: 50px;
+}
+.calculator .options input {
+  width: 90%;
+  height: 30px;
+  text-align: end;
+  font-size: 16px;
+  font-family: sans-serif;
+  border: 1px solid white;
+  background: transparent;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+}
+.calculator .options input:focus,
+.calculator .options :hover,
+.calculator .options :active {
+  outline: 0;
+  outline-offset: 0;
+}
+.calculator .options .name_tick {
+  width: 65px;
 }
 .calculator .options .battary {
-  border: 2px solid #0e91a2;
+  position: relative;
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-}
-.calculator .options .battary p {
-  grid-column: span 3;
-}
-.calculator .options .battary input {
-  width: 100%;
+  grid-template-columns: 1fr 3fr 1fr;
+  place-items: center;
+  border: 2px solid white;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  min-height: 200px;
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 5%;
+  padding: 5px;
 }
 .calculator .options .truck {
-  border: 2px solid yellowgreen;
+  position: relative;
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-}
-.calculator .options .truck p {
-  grid-column: span 3;
-}
-.calculator .options .truck input {
-  width: 100%;
+  grid-template-columns: 1fr 3fr 1fr;
+  place-items: center;
+  border: 2px solid white;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  min-height: 100px;
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 5%;
+  padding: 5px;
 }
 .calculator .options .charger {
-  border: 2px solid blue;
+  position: relative;
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-}
-.calculator .options .charger p {
-  grid-column: span 3;
-}
-.calculator .options .charger input {
-  width: 100%;
+  grid-template-columns: 1fr 3fr 1fr;
+  place-items: center;
+  border: 2px solid white;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  min-height: 150px;
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 5%;
+  padding: 5px;
 }
 .calculator .options .time_step {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  border: 2px solid red;
-}
-.calculator .options .time_step p {
-  grid-column: span 3;
-}
-.calculator .options .time_step input {
-  width: 100%;
+  place-items: center;
+  border: 2px solid white;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  min-height: 150px;
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 5%;
 }
 .calculator .options .time_step span {
   display: grid;
@@ -109,12 +152,21 @@ input {
   border: none;
   cursor: pointer;
 }
-.calculator .options .time_step .post {
+.calculator .options .time_step .stash {
+  display: grid;
+  grid-column: span 3;
+  width: 100%;
+}
+.calculator .options .time_step .stash .post {
   grid-column: span 2;
 }
-.calculator .options .time_step .del {
+.calculator .options .time_step .stash .del {
   cursor: pointer;
   user-select: none;
+}
+.calculator .options .equel {
+  position: relative;
+  bottom: 0;
 }
 
 /*# sourceMappingURL=style.css.map */
