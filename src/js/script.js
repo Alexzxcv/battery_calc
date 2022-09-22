@@ -4,8 +4,7 @@ let buf_array = [];
 let labels = [
     '0',
 ];
-let arrayY = [100];
-
+let arrayY = [];
 
 function createPlot(labels, arrayY) {
     const data = {
@@ -30,13 +29,6 @@ function createPlot(labels, arrayY) {
     );
 }
 
-// let y = [100,];
-// let x = [0,];
-
-// x.forEach(element => {
-
-// });
-
 let count = 1;
 
 $('.plus').click(function () {
@@ -50,6 +42,7 @@ $('.plus').click(function () {
     stash.append(del);
 
     buf_array.push([start_time, stop_time]);
+    // console.log(buf_array);
 
     power_batt = $('.power_batt').val();
     power_truck = $('.power_truck').val();
@@ -62,20 +55,33 @@ $('.plus').click(function () {
     });
 });
 
-function creatMaxYCoord(arrayY) {
+function creatMaxYCoord(arrayY, buf_array) {
+    let next_state = 0;
     let S = $('.power_batt').val();
-    console.log(S);
+    // console.log(S);
     let V = $('.power_truck').val();
-    console.log(V);
+    // console.log(V);
     let t = 0;
-    console.log(t);
+    // console.log(t);
+    // console.log(buf_array);
+    arrayY.push($('.power_batt').val());
 
+    for (let i = 0; i < buf_array.length; i++) {
+        let start_time_s = buf_array[i][0];
+        let stop_time_s = buf_array[i][1];
+        t = ((Number(stop_time_s.slice(0, 2)) * 3600 + Number(stop_time_s.slice(3)) * 60) - (Number(start_time_s.slice(0, 2)) * 3600 + Number(start_time_s.slice(3)) * 60))/3600;
+        // console.log(t);
 
-    for (let i = 1; i <= buf_array.length; i++) {
-        t = (stop_time[1].slice(0, 2) * 3600 + stop_time[1].slice(3) * 60) - (start_time[1].slice(0, 2) * 3600 + start_time[1].slice(3) * 60);
-        console.log(t);
+        if (next_state > 0) {
+            arrayY.push(arrayY[-1] * t);
+        }
+        else {
+            arrayY.push(S / t);
 
+        }
         arrayY.push(V * t);
+        console.log(next_state);
+        next_state ^= 1;
     }
     return arrayY;
 }
@@ -86,7 +92,8 @@ $('.equel').click(function () {
             labels.push(buf_array[i][j]);
         }
     }
-    creatMaxYCoord(arrayY);
+
+    creatMaxYCoord(arrayY, buf_array);
     console.log(arrayY);
     createPlot(labels, arrayY);
 });
