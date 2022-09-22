@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="js/chart.js"></script>
     <script src="js/jquery.min.js"></script>
-    <script src="js/jcanvas.min.js"></script>
     <title>Document</title>
 </head>
 
@@ -33,9 +32,9 @@
                 <span>V</span>
                 <span class="name_tick">Сapacity</span>
                 <input type="text" name="cap"
-                    onblur="document.battary.res.value = eval(document.battary.volt.value * document.battary.cap.value)">
+                    onblur="document.battary.res.value = eval(document.battary.volt.value * document.battary.cap.value / 100)">
                 <span>Ah</span>
-                <span class="name_tick">Power</span>
+                <span class="name_tick">Energy</span>
                 <input readonly type="text" name="res" class="power_batt">
                 <span>kWh</span>
             </form>
@@ -67,7 +66,7 @@
                 <input class="stop" required type="time">
                 <div class="stash"></div>
             </div>
-            <input class="equel" type="sabmit" value="equel" />
+            <input class="equel" readonly type="sabmit" value="equel" />
         </div>
     </div>
     <script src="js/script.js"></script>

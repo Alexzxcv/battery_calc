@@ -4,15 +4,17 @@ let buf_array = [];
 let labels = [
     '0',
 ];
+let arrayY = [100];
 
-function createPlot(labels) {
+
+function createPlot(labels, arrayY) {
     const data = {
         labels: labels,
         datasets: [{
             label: 'plot_day',
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
-            data: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+            data: arrayY,
         }]
     };
 
@@ -60,11 +62,32 @@ $('.plus').click(function () {
     });
 });
 
+function creatMaxYCoord(arrayY) {
+    let S = $('.power_batt').val();
+    console.log(S);
+    let V = $('.power_truck').val();
+    console.log(V);
+    let t = 0;
+    console.log(t);
+
+
+    for (let i = 1; i <= buf_array.length; i++) {
+        t = (stop_time[1].slice(0, 2) * 3600 + stop_time[1].slice(3) * 60) - (start_time[1].slice(0, 2) * 3600 + start_time[1].slice(3) * 60);
+        console.log(t);
+
+        arrayY.push(V * t);
+    }
+    return arrayY;
+}
+
 $('.equel').click(function () {
     for (let i = 0; i < buf_array.length; i++) {
         for (let j = 0; j < 2; j++) {
             labels.push(buf_array[i][j]);
         }
     }
-    createPlot(labels);
+    creatMaxYCoord(arrayY);
+    console.log(arrayY);
+    createPlot(labels, arrayY);
 });
+
