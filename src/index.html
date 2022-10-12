@@ -28,7 +28,7 @@
             <form class="battary" name="battary">
                 <p>Battery</p>
                 <span class="name_tick">Voltage</span>
-                <input type="text" name="volt">
+                <input class="battery_voltage" type="text" name="volt">
                 <span>V</span>
                 <span class="name_tick">Сapacity</span>
                 <input type="text" name="cap"
@@ -53,7 +53,7 @@
                     onblur="document.charger.ch_curr.value = eval(document.charger.ch_rate.value * document.battary.cap.value)">
                 <span>C</span>
                 <span class="name_tick">Charge current</span>
-                <input type="text" name="ch_curr">
+                <input class="charge_current" type="text" name="ch_curr">
                 <span>A</span>
             </form>
 
@@ -66,6 +66,7 @@
                 <input class="stop" required type="time">
                 <div class="stash"></div>
             </div>
+
             <input class="equel" readonly type="sabmit" value="equel" />
         </div>
     </div>

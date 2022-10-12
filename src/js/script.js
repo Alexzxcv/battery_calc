@@ -1,9 +1,7 @@
 let power_batt = 0;
 let power_truck = 0;
 let buf_array = [];
-let labels = [
-    '0',
-];
+let labels = ['0',];
 let arrayY = [];
 
 function createPlot(labels, arrayY) {
@@ -42,7 +40,6 @@ $('.plus').click(function () {
     stash.append(del);
 
     buf_array.push([start_time, stop_time]);
-    // console.log(buf_array);
 
     power_batt = $('.power_batt').val();
     power_truck = $('.power_truck').val();
@@ -55,33 +52,38 @@ $('.plus').click(function () {
     });
 });
 
-function creatMaxYCoord(arrayY, buf_array) {
+function creatYCoord(arrayY, labels) {
     let next_state = 0;
-    let S = $('.power_batt').val();
-    // console.log(S);
-    let V = $('.power_truck').val();
-    // console.log(V);
+    let battery_power = $('.power_batt').val();
+    let battery_voltage = $('.battery_voltage').val();
+    let truck_power = $('.power_truck').val();
+    let charge_current = $('.charge_current').val();
+    let new_Ycoord = 0;
     let t = 0;
-    // console.log(t);
-    // console.log(buf_array);
-    arrayY.push($('.power_batt').val());
+    let En = 0; //энергия в батарее
+    arrayY.push(battery_power);
 
-    for (let i = 0; i < buf_array.length; i++) {
-        let start_time_s = buf_array[i][0];
-        let stop_time_s = buf_array[i][1];
-        t = ((Number(stop_time_s.slice(0, 2)) * 3600 + Number(stop_time_s.slice(3)) * 60) - (Number(start_time_s.slice(0, 2)) * 3600 + Number(start_time_s.slice(3)) * 60))/3600;
-        // console.log(t);
+    for (let i = 0; i < labels.length - 2; i++) {
+        
 
-        if (next_state > 0) {
-            arrayY.push(arrayY[-1] * t);
+        let start_time_s = labels[i + 1];
+        console.log(start_time_s);
+        let stop_time_s = labels[i + 2];
+
+        t = (Number(stop_time_s.slice(0, 2)) * 3600 + Number(stop_time_s.slice(3)) * 60) - (Number(start_time_s.slice(0, 2)) * 3600 + Number(start_time_s.slice(3)) * 60) / 3600;
+        console.log(t);
+
+        En = arrayY[i];
+
+        if (i % 2 === 0) {
+            new_Ycoord = En - (t * truck_power); //координата вниз
         }
         else {
-            arrayY.push(S / t);
-
+            new_Ycoord = En + (t * battery_voltage * charge_current); //координата вверх
         }
-        arrayY.push(V * t);
-        console.log(next_state);
-        next_state ^= 1;
+        arrayY.push(new_Ycoord);
+        console.log(labels);
+        console.log(arrayY);
     }
     return arrayY;
 }
@@ -93,8 +95,8 @@ $('.equel').click(function () {
         }
     }
 
-    creatMaxYCoord(arrayY, buf_array);
-    console.log(arrayY);
+    creatYCoord(arrayY, labels);
+    // console.log(arrayY);
     createPlot(labels, arrayY);
 });
 
