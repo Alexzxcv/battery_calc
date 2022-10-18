@@ -1,0 +1,68 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    display: flex;
+    width: 980px;
+    border: 1px solid red;
+
+    &__plot {
+        display: flex;
+        flex-direction: column;
+        width: 700px;
+        border: 1px solid green;
+
+        .result {
+            display: flex;
+            width: 100%;
+            height: 80px;
+            border: 1px solid black;
+        }
+
+        .plot_day {
+            display: flex;
+            width: 100%;
+            height: 250px;
+            border: 1px solid blue;
+        }
+
+        .plot_trande {
+            display: flex;
+            width: 100%;
+            height: 250px;
+            border: 1px solid blue;
+        }
+    }
+
+    &__calc {
+        .calc {
+            display: flex;
+            flex-direction: column;
+
+            .battery_stat {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .truck_stat {
+                display: flex;
+                flex-direction: row;
+            }
+            .charge_stat {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+
+    }
+}
