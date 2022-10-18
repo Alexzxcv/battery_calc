@@ -53,33 +53,36 @@ $('.plus').click(function () {
 });
 
 function creatYCoord(arrayY, labels) {
-    let next_state = 0;
     let battery_power = $('.power_batt').val();
     let battery_voltage = $('.battery_voltage').val();
     let truck_power = $('.power_truck').val();
     let charge_current = $('.charge_current').val();
     let new_Ycoord = 0;
     let t = 0;
+    let t1 = 0;
+    let t2 = 0;
     let En = 0; //энергия в батарее
     arrayY.push(battery_power);
 
-    for (let i = 0; i < labels.length - 2; i++) {
-        
+    for (let i = 0; i < labels.length - 1; i++) {
 
-        let start_time_s = labels[i + 1];
-        console.log(start_time_s);
-        let stop_time_s = labels[i + 2];
+        let start_time_h = labels[i];
+        let stop_time_h = labels[i + 1];
 
-        t = (Number(stop_time_s.slice(0, 2)) * 3600 + Number(stop_time_s.slice(3)) * 60) - (Number(start_time_s.slice(0, 2)) * 3600 + Number(start_time_s.slice(3)) * 60) / 3600;
-        console.log(t);
+        t1 = (start_time_h.slice(0, 2) * 3600 + start_time_h.slice(3) * 60) / 3600;
+        t2 = (stop_time_h.slice(0, 2) * 3600 + stop_time_h.slice(3) * 60) / 3600;
+        t = Math.abs(t2 - t1) ;
 
         En = arrayY[i];
 
-        if (i % 2 === 0) {
-            new_Ycoord = En - (t * truck_power); //координата вниз
+        if ((i + 1) % 2 === 0) {
+           
+            new_Ycoord = En + (t * battery_voltage * charge_current / 1000); //координата вверх
+            if (new_Ycoord > battery_power) new_Ycoord = battery_power
         }
         else {
-            new_Ycoord = En + (t * battery_voltage * charge_current); //координата вверх
+            new_Ycoord = En - (t * truck_power); //координата вниз
+            if (new_Ycoord < 0) new_Ycoord = 0
         }
         arrayY.push(new_Ycoord);
         console.log(labels);
