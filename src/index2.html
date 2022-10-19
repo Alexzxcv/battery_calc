@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style1.css">
     <title>Document</title>
 </head>
@@ -19,12 +20,16 @@
         <div class="container__calc">
             <form class="calc" action="calculator">
                 <div class="battery_stat">
+                    <h3>Battery</h3>
+                    <h4>Voltage</h4>
                     <select name="battery" id="">
                         <option selected value="24">24</option>
                         <option value="36">36</option>
                         <option value="48">48</option>
                         <option value="80">80</option>
                     </select>
+                    <span>V</span>
+                    <h4>Capacity</h4>
                     <select name="capacity" id="">
                         <option selected value="206">206</option>
                         <option value="412">412</option>
@@ -32,21 +37,42 @@
                         <option value="618">618</option>
 
                     </select>
+                    <span>Ah</span>
+                    <h4>Energy</h4>
                     <input type="text" disabled>
+                    <span>kWh</span>
                 </div>
-                <div class="truck_stat"><input type="text"></div>
+                <div class="truck_stat">
+                    <h3>Battery</h3>
+                    <h4>Voltage</h4>
+                    <select name="battery" id="">
+                        <option selected value="24">24</option>
+                        <option value="36">36</option>
+                        <option value="48">48</option>
+                        <option value="80">80</option>
+                    </select>
+                </div>
                 <div class="charge_stat">
+                    <h3>Carger</h3>
+                    <h4>Charge rate</h4>
                     <select name="charge_rate" id="">
                         <option selected value="0.5">0.5</option>
                         <option value="1">1</option>
                     </select>
+                    <span>C</span>
+                    <h4>Charge current</h4>
                     <input type="text" disabled>
+                    <span>A</span>
                 </div>
                 <div class="stop_time">
+                    <h3>Pause time</h3>
+                    <span>Start</span>
                     <input type="time">
+                    <span>Stop</span>
                     <input type="time">
                     <div class="stash"></div>
                 </div>
+                <button>Equel</button>
             </form>
         </div>
 

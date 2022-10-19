@@ -45,7 +45,25 @@ body {
     }
 
     &__calc {
+        width: 280px;
         .calc {
+            h3 {
+                min-width: 100%;
+                text-align: center;
+                font-weight: bold;
+                font-size: 20px;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+            }
+            h4 {
+                position: relative;
+                min-width: 100%;
+                text-align: center;
+            }
+            select {
+                width: 100px;
+            }
+            
             display: flex;
             flex-direction: column;
 
@@ -56,7 +74,7 @@ body {
 
             .truck_stat {
                 display: flex;
-                flex-direction: row;
+                flex-direction: column;
             }
             .charge_stat {
                 display: flex;
