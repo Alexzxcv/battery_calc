@@ -4,6 +4,12 @@ let buf_array = [];
 let labels = ['0',];
 let arrayY = [];
 
+console.log(1);
+
+$('.battery_capacity').onblur = function() {
+   console.log($('#battery_capacity').val());
+}
+
 function createPlot(labels, arrayY) {
     const data = {
         labels: labels,
