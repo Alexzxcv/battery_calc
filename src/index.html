@@ -15,9 +15,11 @@
 <body>
     <div class="container">
         <div class="container__plot">
-            <div class="result"></div>
+            <div class="result">
+
+            </div>
             <div class="plot_day">
-                <canvas id="myChart" width="695" height="248"></canvas>
+                <canvas id="myChart" width="670" height="240"></canvas>
             </div>
             <div class="plot_trande"></div>
         </div>
@@ -27,7 +29,9 @@
                     <h3>Battery</h3>
                     <label>
                         <h4>Voltage</h4>
-                        <select class="battery_voltage" name="battery_volt" onblur="document.calculator.battery_en.value = eval(document.calculator.battery_volt.value * document.calculator.battery_cap.value / 1000)">
+                        <select class="battery_voltage" name="battery_volt"
+                            onchange="document.calculator.battery_en.value = eval(document.calculator.battery_volt.value * document.calculator.battery_cap.value / 1000),
+                        document.calculator.carger_curr.value = eval(document.calculator.charge_rate.value * document.calculator.battery_cap.value)">
                             <option selected value="24">24</option>
                             <option value="36">36</option>
                             <option value="48">48</option>
@@ -38,7 +42,9 @@
 
                     <label>
                         <h4>Capacity</h4>
-                        <select class="battery_capacity" name="battery_cap" onblur="document.calculator.battery_en.value = eval(document.calculator.battery_volt.value * document.calculator.battery_cap.value / 1000)">
+                        <select class="battery_capacity" name="battery_cap"
+                            onchange="document.calculator.battery_en.value = eval(document.calculator.battery_volt.value * document.calculator.battery_cap.value / 1000),
+                        document.calculator.carger_curr.value = eval(document.calculator.charge_rate.value * document.calculator.battery_cap.value)">
                             <option selected value="206">206</option>
                             <option value="412">412</option>
                             <option value="554">554</option>
@@ -49,7 +55,7 @@
 
                     <label>
                         <h4>Energy</h4>
-                        <input name="battery_en" class="power_batt" type="text" placeholder="4,95" disabled>
+                        <input name="battery_en" class="power_batt" type="text" value="4.95" disabled>
                         <span>kWh</span>
                     </label>
                 </div>
@@ -58,7 +64,7 @@
                     <h3>Truck</h3>
                     <label>
                         <h4>Power consumption</h4>
-                        <input class="power_truck" type="text">
+                        <input class="power_truck" type="text" value="2.2">
                         <span>kWh/h</span>
                     </label>
                 </div>
@@ -67,35 +73,38 @@
                     <h3>Charger</h3>
                     <label>
                         <h4>Charge rate</h4>
-                        <select name="charge_rate" onblur="document.calculator.carger_curr.value = eval(document.calculator.charge_rate.value * document.calculator.battery_cap.value)">
-                            <option selected value="0.5">0.5</option>
+                        <select name="charge_rate"
+                            onchange="document.calculator.carger_curr.value = eval(document.calculator.charge_rate.value * document.calculator.battery_cap.value)">
+                            <option selected value="0.1">0.1</option>
+                            <option value="0.2">0.2</option>
+                            <option value="0.5">0.5</option>
                             <option value="1">1</option>
                         </select>
                         <span>C</span>
                     </label>
                     <label>
                         <h4>Charge current</h4>
-                        <input name="carger_curr" class="charge_current" type="text" placeholder="100" disabled>
+                        <input name="carger_curr" class="charge_current" type="text" value="20.6" disabled>
                         <span>A</span>
                     </label>
                 </div>
 
                 <div class="stop_time">
-                    <h3>Pause time</h3>
-                    <div style="display: flex; flex-direction: row;">
-                        <div style="display: flex; flex-direction: column;">
-                            <label style="display: flex; flex-direction: row; align-items: center;
-                            justify-content: center;"><span>Start</span>
+                    <h3>Breacks</h3>
+                    <div class="block_row">
+                        <div class="block_column">
+                            <label>
+                                <span>Start</span>
                                 <input class="start" type="time">
                             </label>
-                            <label style="display: flex; flex-direction: row; align-items: center;
-                            justify-content: center;"><span>Stop</span>
+                            <label>
+                                <span>Stop</span>
                                 <input class="stop" type="time">
                             </label>
                         </div>
-                        <span style="width: 100%;" class="plus"><span>Plus</span></span>
+                        <span class="plus"><span>Plus</span></span>
                     </div>
-                    <div style="display: flex; flex-direction: column;" class="stash"></div>
+                    <div class="stash block_column"></div>
                 </div>
 
                 <span class="equel">Calculate</span>

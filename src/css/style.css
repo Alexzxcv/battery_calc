@@ -34,40 +34,49 @@ body {
 .container {
   display: flex;
   width: 980px;
-  border: 1px solid red;
+  height: 600px;
 }
 .container__plot {
   display: flex;
   flex-direction: column;
-  width: 700px;
-  border: 1px solid green;
+  width: 680px;
 }
 .container__plot .result {
   display: flex;
   width: 100%;
   height: 80px;
-  border: 1px solid black;
+  background-color: #1d1c1c;
+  color: white;
+  border-radius: 15px;
 }
 .container__plot .plot_day {
   display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 250px;
-  border: 1px solid blue;
+  margin-top: 15px;
+  background-color: #1d1c1c;
+  color: white;
+  border-radius: 15px;
 }
 .container__plot .plot_trande {
   display: flex;
   width: 100%;
   height: 250px;
-  border: 1px solid blue;
+  margin-top: 15px;
+  background-color: #1d1c1c;
+  color: white;
+  border-radius: 15px;
 }
 .container__calc {
-  width: 280px;
-  height: 580px;
+  width: 300px;
   overflow-y: scroll;
 }
 .container__calc .calc {
   display: flex;
   flex-direction: column;
+  margin-left: 15px;
 }
 .container__calc .calc h3 {
   min-width: 100%;
@@ -132,12 +141,24 @@ body {
   padding: 15px;
 }
 .container__calc .calc .stop_time label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   padding-top: 15px;
 }
 .container__calc .calc .stop_time label input {
   margin-left: 10px;
   margin-right: 10px;
   width: 130px;
+}
+.container__calc .calc .stop_time .block_row {
+  display: flex;
+  flex-direction: row;
+}
+.container__calc .calc .stop_time .block_column {
+  display: flex;
+  flex-direction: column;
 }
 .container__calc .calc .stop_time .plus {
   width: 100%;
@@ -176,4 +197,4 @@ body {
   padding-bottom: 3px;
 }
 
-/*# sourceMappingURL=style1.css.map */
+/*# sourceMappingURL=style.css.map */
