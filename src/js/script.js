@@ -11,12 +11,13 @@ $('.battery_capacity').onblur = function() {
 }
 
 function createPlot(labels, arrayY) {
+
     const data = {
         labels: labels,
         datasets: [{
             label: 'plot_day',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgb(0, 0, 255)',
+            borderColor: 'rgb(0, 0, 255)',
             data: arrayY,
         }]
     };
@@ -39,11 +40,12 @@ $('.plus').click(function () {
     start_time = $('.start').val();
     stop_time = $('.stop').val();
     let stash = $('.stash');
-    const stash_block = `<span class="post" id="p${count}">Start: ${start_time} Stop: ${stop_time}</span>`;
-    const del = `<span class="del" id="d${count}">Del</span>`;
+    const stash_block = `<div class="post s${count}"><span class="time_step" id="p${count}">Start: ${start_time} Stop: ${stop_time}</span>
+    <span class="del" id="d${count}">-</span></div>`;
+    // const del = `<span class="del" id="d${count}">Del</span>`;
 
     stash.append(stash_block);
-    stash.append(del);
+    // stash.append(del);
 
     buf_array.push([start_time, stop_time]);
 
@@ -53,7 +55,7 @@ $('.plus').click(function () {
     count++;
     $('.del').click(function () {
         const clickId = $(this).attr('id').substring(1);
-        $(`#p${clickId}, #d${clickId}`).remove();
+        $(`#p${clickId}, #d${clickId}, .s${clickId}`).remove();
         buf_array.splice(clickId, 1);
     });
 });
@@ -103,7 +105,6 @@ $('.equel').click(function () {
             labels.push(buf_array[i][j]);
         }
     }
-
     creatYCoord(arrayY, labels);
     // console.log(arrayY);
     createPlot(labels, arrayY);

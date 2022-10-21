@@ -50,7 +50,23 @@ body {
             background-color: #1d1c1c;
             color: white;
             border-radius: 15px;
+
             // padding: 15px;
+            .soc,
+            .work {
+                width: 50%;
+
+                h4 {
+                    margin: 15px 0 15px 30px;
+                    width: 165px;
+                    font-size: 18px;
+
+                    span {
+                        margin-left: 15px;
+                        float: right;
+                    }
+                }
+            }
         }
 
         .plot_day {
@@ -87,6 +103,7 @@ body {
             display: flex;
             flex-direction: column;
             margin-left: 15px;
+
             h3 {
                 min-width: 100%;
                 text-align: left;
@@ -104,10 +121,6 @@ body {
                 padding: 15px 0 5px 3px;
             }
 
-            span {
-                padding-left: 2px;
-            }
-
             select,
             input {
                 width: 180px;
@@ -116,6 +129,7 @@ body {
                 border-radius: 10px;
                 color: white;
                 padding-left: 5px;
+                cursor: pointer;
             }
 
             .battery_stat {
@@ -126,7 +140,7 @@ body {
                 color: white;
                 border-radius: 15px;
                 padding: 15px;
-                
+
             }
 
             .truck_stat {
@@ -164,11 +178,13 @@ body {
                     align-items: center;
                     justify-content: center;
                     padding-top: 15px;
+                    width: 190px;
 
                     input {
                         margin-left: 10px;
                         margin-right: 10px;
                         width: 130px;
+                        user-select: none;
                     }
                 }
 
@@ -186,6 +202,7 @@ body {
                     width: 100%;
                     height: 75px;
                     margin-top: 15px;
+                    padding: 0;
                     border-radius: 15px;
                     display: flex;
                     align-items: center;
@@ -194,12 +211,44 @@ body {
                     user-select: none;
                     background-color: white;
                     color: black;
+                    font-size: 45px;
                     font-weight: 600;
                     transition-duration: 0.5s;
 
                     &:hover {
                         transform: scale(1.1);
                     }
+                }
+
+                .stash {
+                    .post {
+                        padding-left: 2px;
+                        margin-top: 15px;
+                        display: flex;
+                        flex-direction: row;
+
+                        .time_step {
+                            display: inline-block;
+                            width: 188px;
+                        }
+
+                        .del {
+                            display: inline-block;
+                            width: 57px;
+                            height: 18px;
+                            border: 1px solid white;
+                            text-align: center;
+                            border-radius: 15px;
+                            background-color: white;
+                            color: black;
+                            font-weight: bold;
+                            font-size: 30px;
+                            line-height: 16px;
+                            cursor: pointer;
+                            user-select: none;
+                        }
+                    }
+
                 }
             }
 

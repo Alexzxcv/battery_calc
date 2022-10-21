@@ -15,13 +15,22 @@
 <body>
     <div class="container">
         <div class="container__plot">
-            <div class="result">
-
+            <div class="result" style="display: flex;">
+                <div class="soc">
+                    <h4>Max SOC:<span>100%</span></h4> 
+                    <h4>Min SOC:<span>10%</span></h4> 
+                </div>  
+                <div class="work">
+                    <h4>Working:<span>24h</span></h4>
+                    <h4>Charging:<span>24h</span></h4>
+                </div>
             </div>
             <div class="plot_day">
                 <canvas id="myChart" width="670" height="240"></canvas>
             </div>
-            <div class="plot_trande"></div>
+            <div class="plot_trande">
+                <!-- <canvas id="myChart" width="670" height="240"></canvas> -->
+            </div>
         </div>
         <div class="container__calc">
             <form class="calc" name="calculator">
@@ -90,7 +99,7 @@
                 </div>
 
                 <div class="stop_time">
-                    <h3>Breacks</h3>
+                    <h3 class="breaks" data-title="Паузы во времени работы">Breaks</h3>
                     <div class="block_row">
                         <div class="block_column">
                             <label>
@@ -102,17 +111,15 @@
                                 <input class="stop" type="time">
                             </label>
                         </div>
-                        <span class="plus"><span>Plus</span></span>
+                        <span class="plus">+</span>
                     </div>
                     <div class="stash block_column"></div>
                 </div>
-
                 <span class="equel">Calculate</span>
             </form>
         </div>
-
     </div>
     <script src="js/script.js"></script>
 </body>
-
+<!-- https://realadmin.ru/coding/jquery-hint.html -->
 </html>
