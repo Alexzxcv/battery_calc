@@ -5,72 +5,105 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/chart.min.js"></script>
-    <script src="js/jquery.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/chart.min.js"></script>
     <title>Document</title>
 </head>
 
 <body>
-    <div class="calculator">
-        <div class="plot">
-            <div class="parametr">
-
-            </div>
+    <div class="container">
+        <div class="container__plot">
+            <div class="result"></div>
             <div class="plot_day">
-                <canvas id="myChart" width="1112" height="316"></canvas>
+                <canvas id="myChart" width="695" height="248"></canvas>
             </div>
-            <div class="plot_trende">
-                <!-- <canvas id="myChart_2" width="1112" height="356"></canvas> -->
-            </div>
+            <div class="plot_trande"></div>
         </div>
-        <div class="options">
-            <form class="battary" name="battary">
-                <p>Battery</p>
-                <span class="name_tick">Voltage</span>
-                <input class="battery_voltage" type="text" name="volt">
-                <span>V</span>
-                <span class="name_tick">Сapacity</span>
-                <input type="text" name="cap"
-                    onblur="document.battary.res.value = eval(document.battary.volt.value * document.battary.cap.value / 100)">
-                <span>Ah</span>
-                <span class="name_tick">Energy</span>
-                <input readonly type="text" name="res" class="power_batt">
-                <span>kWh</span>
+        <div class="container__calc">
+            <form class="calc" name="calculator">
+                <div class="battery_stat">
+                    <h3>Battery</h3>
+                    <label>
+                        <h4>Voltage</h4>
+                        <select class="battery_voltage" name="battery_volt" onblur="document.calculator.battery_en.value = eval(document.calculator.battery_volt.value * document.calculator.battery_cap.value / 1000)">
+                            <option selected value="24">24</option>
+                            <option value="36">36</option>
+                            <option value="48">48</option>
+                            <option value="80">80</option>
+                        </select>
+                        <span>V</span>
+                    </label>
+
+                    <label>
+                        <h4>Capacity</h4>
+                        <select class="battery_capacity" name="battery_cap" onblur="document.calculator.battery_en.value = eval(document.calculator.battery_volt.value * document.calculator.battery_cap.value / 1000)">
+                            <option selected value="206">206</option>
+                            <option value="412">412</option>
+                            <option value="554">554</option>
+                            <option value="618">618</option>
+                        </select>
+                        <span>Ah</span>
+                    </label>
+
+                    <label>
+                        <h4>Energy</h4>
+                        <input name="battery_en" class="power_batt" type="text" placeholder="4,95" disabled>
+                        <span>kWh</span>
+                    </label>
+                </div>
+
+                <div class="truck_stat">
+                    <h3>Truck</h3>
+                    <label>
+                        <h4>Power consumption</h4>
+                        <input class="power_truck" type="text">
+                        <span>kWh/h</span>
+                    </label>
+                </div>
+
+                <div class="charge_stat">
+                    <h3>Charger</h3>
+                    <label>
+                        <h4>Charge rate</h4>
+                        <select name="charge_rate" onblur="document.calculator.carger_curr.value = eval(document.calculator.charge_rate.value * document.calculator.battery_cap.value)">
+                            <option selected value="0.5">0.5</option>
+                            <option value="1">1</option>
+                        </select>
+                        <span>C</span>
+                    </label>
+                    <label>
+                        <h4>Charge current</h4>
+                        <input name="carger_curr" class="charge_current" type="text" placeholder="100" disabled>
+                        <span>A</span>
+                    </label>
+                </div>
+
+                <div class="stop_time">
+                    <h3>Pause time</h3>
+                    <div style="display: flex; flex-direction: row;">
+                        <div style="display: flex; flex-direction: column;">
+                            <label style="display: flex; flex-direction: row; align-items: center;
+                            justify-content: center;"><span>Start</span>
+                                <input class="start" type="time">
+                            </label>
+                            <label style="display: flex; flex-direction: row; align-items: center;
+                            justify-content: center;"><span>Stop</span>
+                                <input class="stop" type="time">
+                            </label>
+                        </div>
+                        <span style="width: 100%;" class="plus"><span>Plus</span></span>
+                    </div>
+                    <div style="display: flex; flex-direction: column;" class="stash"></div>
+                </div>
+
+                <span class="equel">Calculate</span>
             </form>
-
-            <form class="truck" name="truck">
-                <p>Truck</p>
-                <span class="name_tick">Power</span>
-                <input type="text" name="power_truck" class="power_truck">
-                <span>kW</span>
-            </form>
-
-            <form class="charger" name="charger">
-                <p>Charger</p>
-                <span class="name_tick">Charge rate</span>
-                <input type="text" name="ch_rate"
-                    onblur="document.charger.ch_curr.value = eval(document.charger.ch_rate.value * document.battary.cap.value)">
-                <span>C</span>
-                <span class="name_tick">Charge current</span>
-                <input class="charge_current" type="text" name="ch_curr">
-                <span>A</span>
-            </form>
-
-            <div class="time_step">
-                <p>Время пауз</p>
-                <span>Start</span>
-                <span>Stop</span>
-                <button class="plus">Plus</button>
-                <input class="start" required type="time">
-                <input class="stop" required type="time">
-                <div class="stash"></div>
-            </div>
-
-            <input class="equel" readonly type="sabmit" value="equel" />
         </div>
+
     </div>
-    <script src="js/script.js"></script>
+    <script src="/js/script.js"></script>
 </body>
 
 </html>

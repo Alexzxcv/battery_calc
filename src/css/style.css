@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -5,202 +6,174 @@
 }
 
 body {
+  font-family: "Poppins", sans-serif;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: sans-serif;
+  background-color: black;
 }
 
-input {
-  width: 60px;
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-.calculator {
-  display: flex;
-  flex-direction: row;
-  height: 800px;
-  width: 1400px;
+::-webkit-scrollbar-track {
+  display: none;
 }
-.calculator .plot {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 80%;
-}
-.calculator .plot .parametr {
-  display: flex;
-  flex-direction: column;
-  justify-content: first baseline;
-  border: 2px solid white;
+
+::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  height: 20%;
-  width: 98%;
-  margin-left: 1%;
-  margin-top: 1.25%;
+  background: #888;
 }
-.calculator .plot .plot_day {
-  border: 2px solid white;
-  border-radius: 5px;
-  background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  height: 40%;
-  width: 98%;
-  margin-left: 1%;
-  margin-top: 1.25%;
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
-.calculator .plot .plot_trende {
-  border: 2px solid white;
-  border-radius: 5px;
-  background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  height: 40%;
-  width: 98%;
-  margin-left: 1%;
-  margin-top: 1.25%;
+
+.container {
+  display: flex;
+  width: 980px;
+  border: 1px solid red;
 }
-.calculator .options {
+.container__plot {
   display: flex;
   flex-direction: column;
-  width: 20%;
-  background-color: white;
+  width: 700px;
+  border: 1px solid green;
+}
+.container__plot .result {
   display: flex;
-  flex-direction: column;
-  align-items: be;
-}
-.calculator .options p {
-  display: grid;
-  grid-column: span 3;
-  place-items: center;
-  font-size: 16px;
-  font-weight: bold;
-  height: 30px;
-  min-width: 50px;
-}
-.calculator .options input {
-  width: 90%;
-  height: 30px;
-  text-align: end;
-  font-size: 16px;
-  font-family: sans-serif;
-  border: 1px solid white;
-  background: transparent;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
-}
-.calculator .options input:focus,
-.calculator .options :hover,
-.calculator .options :active {
-  outline: 0;
-  outline-offset: 0;
-}
-.calculator .options .name_tick {
-  width: 65px;
-}
-.calculator .options .battary {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
-  place-items: center;
-  border: 2px solid white;
-  border-radius: 5px;
-  background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  min-height: 200px;
-  width: 90%;
-  margin-left: 5%;
-  margin-top: 5%;
-  padding: 5px;
-}
-.calculator .options .truck {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
-  place-items: center;
-  border: 2px solid white;
-  border-radius: 5px;
-  background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  min-height: 100px;
-  width: 90%;
-  margin-left: 5%;
-  margin-top: 5%;
-  padding: 5px;
-}
-.calculator .options .charger {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
-  place-items: center;
-  border: 2px solid white;
-  border-radius: 5px;
-  background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  min-height: 150px;
-  width: 90%;
-  margin-left: 5%;
-  margin-top: 5%;
-  padding: 5px;
-}
-.calculator .options .time_step {
-  position: relative;
-  flex-grow: 1;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  place-items: center;
-  border: 2px solid white;
-  border-radius: 5px;
-  background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  min-height: 150px;
-  width: 90%;
-  margin-left: 5%;
-  margin-top: 5%;
-}
-.calculator .options .time_step p {
-  max-height: 50px;
-  min-height: 50px;
-}
-.calculator .options .time_step span {
-  display: grid;
   width: 100%;
-  place-items: center;
+  height: 80px;
+  border: 1px solid black;
 }
-.calculator .options .time_step .plus {
-  grid-row: span 2;
-  place-items: center;
-  height: 100%;
-  background: transparent;
-  border: none;
-  cursor: pointer;
+.container__plot .plot_day {
+  display: flex;
+  width: 100%;
+  height: 250px;
+  border: 1px solid blue;
 }
-.calculator .options .time_step .stash {
-  display: grid;
+.container__plot .plot_trande {
+  display: flex;
+  width: 100%;
+  height: 250px;
+  border: 1px solid blue;
+}
+.container__calc {
+  width: 280px;
+  height: 580px;
   overflow-y: scroll;
-  grid-column: span 3;
-  width: 100%;
 }
-.calculator .options .time_step .stash .post {
-  grid-column: span 2;
+.container__calc .calc {
+  display: flex;
+  flex-direction: column;
 }
-.calculator .options .time_step .stash .del {
-  cursor: pointer;
-  user-select: none;
+.container__calc .calc h3 {
+  min-width: 100%;
+  text-align: left;
+  font-weight: bold;
+  font-size: 20px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.1px;
 }
-.calculator .options .equel {
+.container__calc .calc h4 {
   position: relative;
-  min-height: 30px;
-  width: 90%;
-  margin-left: 5%;
-  margin-top: 5%;
-  padding: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  border-radius: 5px;
+  min-width: 100%;
+  text-align: left;
+  padding: 15px 0 5px 3px;
+}
+.container__calc .calc span {
+  padding-left: 2px;
+}
+.container__calc .calc select,
+.container__calc .calc input {
+  width: 180px;
+  height: 30px;
+  background-color: #00000050;
+  border-radius: 10px;
+  color: white;
+  padding-left: 5px;
+}
+.container__calc .calc .battery_stat {
+  display: flex;
+  flex-direction: column;
+  background-color: #1d1c1c;
+  color: white;
+  border-radius: 15px;
+  padding: 15px;
+}
+.container__calc .calc .truck_stat {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  background-color: #1d1c1c;
+  color: white;
+  border-radius: 15px;
+  padding: 15px;
+}
+.container__calc .calc .charge_stat {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  background-color: #1d1c1c;
+  color: white;
+  border-radius: 15px;
+  padding: 15px;
+}
+.container__calc .calc .stop_time {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  background-color: #1d1c1c;
+  color: white;
+  border-radius: 15px;
+  padding: 15px;
+}
+.container__calc .calc .stop_time label {
+  padding-top: 15px;
+}
+.container__calc .calc .stop_time label input {
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 130px;
+}
+.container__calc .calc .stop_time .plus {
+  width: 100%;
+  height: 75px;
+  margin-top: 15px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   user-select: none;
+  background-color: white;
+  color: black;
+  font-weight: 600;
+  transition-duration: 0.5s;
 }
-.calculator .options .equel:hover {
-  border: 1px solid #53c0ff;
+.container__calc .calc .stop_time .plus:hover {
+  transform: scale(1.1);
+}
+.container__calc .calc .equel {
+  width: 100%;
+  height: 30px;
+  margin-top: 15px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  background-color: white;
+  color: black;
+  font-weight: 600;
+  transition-duration: 0.5s;
+}
+.container__calc .calc .equel:hover {
+  padding-bottom: 3px;
 }
 
-/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style1.css.map */
