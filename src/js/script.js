@@ -4,11 +4,24 @@ let buf_array = [];
 let labels = ['0',];
 let arrayY = [];
 
-console.log(1);
-
-$('.battery_capacity').onblur = function() {
-   console.log($('#battery_capacity').val());
-}
+$(function(){
+    $("[data-tooltip]").mousemove(function (eventObject) {
+        $data_tooltip = $(this).attr("data-tooltip");
+        $("#tooltip").html($data_tooltip)
+            .css({ 
+              "top" : eventObject.pageY + 5,
+              "left" : eventObject.pageX + 5
+            })
+            .show();
+        }).mouseout(function () {
+          $("#tooltip").hide()
+            .html("")
+            .css({
+                "top" : 0,
+                "left" : 0
+            });
+    });
+});
 
 function createPlot(labels, arrayY) {
 
@@ -37,15 +50,18 @@ function createPlot(labels, arrayY) {
 let count = 1;
 
 $('.plus').click(function () {
-    start_time = $('.start').val();
-    stop_time = $('.stop').val();
+    let start_time = $('.start').val();
+    let stop_time = $('.stop').val();
     let stash = $('.stash');
+
+    if ((start_time === "") || (stop_time === "")){
+        return;
+    }
+
     const stash_block = `<div class="post s${count}"><span class="time_step" id="p${count}">Start: ${start_time} Stop: ${stop_time}</span>
     <span class="del" id="d${count}">-</span></div>`;
-    // const del = `<span class="del" id="d${count}">Del</span>`;
 
     stash.append(stash_block);
-    // stash.append(del);
 
     buf_array.push([start_time, stop_time]);
 
@@ -80,18 +96,37 @@ function creatYCoord(arrayY, labels) {
         t1 = (start_time_h.slice(0, 2) * 3600 + start_time_h.slice(3) * 60) / 3600;
         t2 = (stop_time_h.slice(0, 2) * 3600 + stop_time_h.slice(3) * 60) / 3600;
         t = Math.abs(t2 - t1) ;
-
+        console.log(t);
         En = arrayY[i];
+
+        // if ((i + 1) % 2 === 0) {
+           
+        //     new_Ycoord = En + (t * battery_voltage * charge_current / 1000); //координата вверх
+        //     if (new_Ycoord > battery_power) new_Ycoord = battery_power
+        // }
+        // else {
+        //     new_Ycoord = En - (t * truck_power); //координата вниз
+        //     if (new_Ycoord < 0) new_Ycoord = 0
+        // }
 
         if ((i + 1) % 2 === 0) {
            
             new_Ycoord = En + (t * battery_voltage * charge_current / 1000); //координата вверх
-            if (new_Ycoord > battery_power) new_Ycoord = battery_power
+            if (new_Ycoord > battery_power){
+                new_Ycoord = battery_power;
+                t = (battery_power - En) / battery_power;
+                
+                labels.push(t);
+            }
         }
         else {
             new_Ycoord = En - (t * truck_power); //координата вниз
-            if (new_Ycoord < 0) new_Ycoord = 0
+            if (new_Ycoord < 0) {
+                new_Ycoord = 0;
+                t = En / truck_power;
+            }
         }
+
         arrayY.push(new_Ycoord);
         console.log(labels);
         console.log(arrayY);

@@ -105,7 +105,7 @@ body {
             margin-left: 15px;
 
             h3 {
-                min-width: 100%;
+                // min-width: 100%;
                 text-align: left;
                 font-weight: bold;
                 font-size: 20px;
@@ -171,6 +171,41 @@ body {
                 color: white;
                 border-radius: 15px;
                 padding: 15px;
+
+                .break_info {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+
+                    .info_block {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        min-width: 20px;
+                        min-height: 20px;
+                        background-color: white;
+                        border-radius: 50%;
+
+                        .info_item {
+                            width: 17px;
+                            height: 17px;
+                        }
+                    }
+
+                }
+
+                #tooltip {
+                    z-index: 9999;
+                    position: absolute;
+                    display: none;
+                    top: 0px;
+                    left: 0px;
+                    background-color: #fff;
+                    padding: 5px 10px 5px 10px;
+                    color: #000;
+                    font-weight: 500;
+                    border-radius: 5px;
+                }
 
                 label {
                     display: flex;
