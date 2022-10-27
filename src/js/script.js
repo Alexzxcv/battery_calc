@@ -7,6 +7,9 @@ let bufArrayX = ['0',]; //все значения времени в формат
 let coordXY = {
     labels: [],
     arrayY: [],
+    get lastEnergi() {
+        return this.arrayY.length - 1;
+    },
 }
 
 
@@ -88,6 +91,8 @@ function creatYCoord(coordXY, bufArrayX) {
     let t1 = 0;
     let t2 = 0;
     let En = 0; //энергия в батарее
+    let th = 0;
+    let tm = 0;
     coordXY.arrayY.push(battery_power);
     console.log(coordXY.arrayY)
 
@@ -100,8 +105,10 @@ function creatYCoord(coordXY, bufArrayX) {
         t2 = (stop_time_h.slice(0, 2) * 3600 + stop_time_h.slice(3) * 60) / 3600;
         t = Math.abs(t2 - t1);
         console.log(t);
-        En = coordXY.arrayY[coordXY.arrayY.length];
-        console.log(En);
+        En = coordXY.lastEnergi;
+        console.log(coordXY.lastEnergi);
+        // console.log(En);
+
         // if ((i + 1) % 2 === 0) {
 
         //     new_Ycoord = En + (t * battery_voltage * charge_current / 1000); //координата вверх
@@ -119,6 +126,9 @@ function creatYCoord(coordXY, bufArrayX) {
                 new_Ycoord = battery_power;
                 coordXY.arrayY.push(new_Ycoord);
                 t = t + (battery_power - En) / battery_power;
+                th = Math.trunc(t);
+                tm = ((t - Math.trunc(t)) * 60).toFixed(0);
+                t = th + ':' + tm;
                 coordXY.labels.push(t);
 
             }
@@ -129,6 +139,9 @@ function creatYCoord(coordXY, bufArrayX) {
                 new_Ycoord = 0;
                 coordXY.arrayY.push(new_Ycoord);
                 t = t + En / truck_power;
+                th = Math.trunc(t);
+                tm = ((t - Math.trunc(t)) * 60).toFixed(0);
+                t = th + ':' + tm;
                 coordXY.labels.push(t);
             }
         }
