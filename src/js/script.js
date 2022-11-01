@@ -1,17 +1,28 @@
 let power_batt = 0;
 let power_truck = 0;
-let buf_array = [];     //все значения времени введенные пользователем в формате 00:00 (буфер)
-// let labels = [];        //все значения времени в формате 00:00 отображающиеся на графике
-// let arrayY = [];        //все значения емкости в формате 00:00 отображающиеся на графике
-let bufArrayX = ['0',]; //все значения времени в формате 21.5 (буфер)
-let coordXY = {
-    labels: [],
-    arrayY: [],
+let buf_array = [];     //все значения времени введенные пользователем в формате 00:00 (буфер)        
+let bufArrayX = ['00:00']; //все значения времени в формате 00:00 (буфер)
+let count_ID = 1;
+let sum_h = 0;
+let coordXY_day = {
+    labels: [],         //все значения времени в формате 00:00 отображающиеся на графике
+    arrayY: [],         //все значения емкости отображающиеся на графике
     get lastEnergi() {
-        return this.arrayY.length - 1;
+        return this.arrayY[this.arrayY.length - 1];
+    },
+    get lastTime() {
+        return this.labels[this.labels.length - 1];
     },
 }
-
+let coordXY_week = {
+    labels: [],         //все значения времени в формате 00:00 отображающиеся на графике
+    arrayY: [],         //все значения емкости отображающиеся на графике
+    get lastEnergi() {
+        console.log(this.arrayY[this.arrayY.length - 1]);
+        return this.arrayY[this.arrayY.length - 1];
+    },
+    
+}
 
 $(function () {
     $("[data-tooltip]").mousemove(function (eventObject) {
@@ -28,12 +39,12 @@ $(function () {
     });
 });
 
-function createPlot(coordXY) {
+function createPlotDay(coordXY) {
 
     const data = {
         labels: coordXY.labels,
         datasets: [{
-            label: 'plot_day',
+            label: 'Day',
             backgroundColor: 'rgb(0, 0, 255)',
             borderColor: 'rgb(0, 0, 255)',
             data: coordXY.arrayY,
@@ -52,19 +63,57 @@ function createPlot(coordXY) {
     );
 }
 
-let count = 1;
+function createPlotWeek(coordXY) {
+
+    const data = {
+        labels: coordXY.labels,
+        datasets: [{
+            label: 'Week',
+            backgroundColor: 'rgb(0, 0, 255)',
+            borderColor: 'rgb(0, 0, 255)',
+            data: coordXY.arrayY,
+        }]
+    };
+
+    const config = {
+        type: 'line',
+        data: data,
+        options: {}
+    };
+
+    const myChart = new Chart(
+        document.getElementById('myChartWeek'),
+        config
+    );
+}
+
 
 $('.plus').click(function () {
     let start_time = $('.start').val();
     let stop_time = $('.stop').val();
     let stash = $('.stash');
 
+    sum_h = Number(start_time.slice(0, 2)) + Number(stop_time.slice(0, 2));
     if ((start_time === "") || (stop_time === "")) {
         return;
     }
+    else if (start_time > stop_time) {
+        return;
+    }
 
-    const stash_block = `<div class="post s${count}"><span class="time_step" id="p${count}">Start: ${start_time} Stop: ${stop_time}</span>
-    <span class="del" id="d${count}">-</span></div>`;
+    for (let i = 0; i < buf_array.length; i++) {
+        for (let j = 0; j < 2; j++) {
+
+            if ((start_time === buf_array[i][j]) || (stop_time === buf_array[i][j])) {
+                return;
+            }
+            if (start_time < buf_array[buf_array.length - 1][j]) {
+                return;
+            }
+        }
+    }
+    const stash_block = `<div class="post s${count_ID}"><span class="time_step" id="p${count_ID}">Start: ${start_time} Stop: ${stop_time}</span>
+    <span class="del" id="d${count_ID}">-</span></div>`;
 
     stash.append(stash_block);
 
@@ -73,7 +122,7 @@ $('.plus').click(function () {
     power_batt = $('.power_batt').val();
     power_truck = $('.power_truck').val();
 
-    count++;
+    count_ID++;
     $('.del').click(function () {
         const clickId = $(this).attr('id').substring(1);
         $(`#p${clickId}, #d${clickId}, .s${clickId}`).remove();
@@ -81,76 +130,86 @@ $('.plus').click(function () {
     });
 });
 
-function creatYCoord(coordXY, bufArrayX) {
+
+
+function creatYCoord(coordXY_week, coordXY_day, bufArrayX) {
     let battery_power = $('.power_batt').val();
     let battery_voltage = $('.battery_voltage').val();
     let truck_power = $('.power_truck').val();
     let charge_current = $('.charge_current').val();
     let new_Ycoord = 0;
-    let t = 0;
-    let t1 = 0;
-    let t2 = 0;
+    let t = 0;  //общее время расчета
+    let t1 = 0; //время старта
+    let t2 = 0; //время стопа
     let En = 0; //энергия в батарее
-    let th = 0;
-    let tm = 0;
-    coordXY.arrayY.push(battery_power);
-    console.log(coordXY.arrayY)
+    let th = 0; //парс часов
+    let tm = 0; //парс минут
+    coordXY_day.arrayY.push(battery_power);
+    coordXY_day.labels.push('00:00');
+    coordXY_week.arrayY.push(battery_power);
+    coordXY_week.labels.push('00:00');
 
-    for (let i = 0; i < bufArrayX.length - 1; i++) {
+    // for (let i = 1; i < 7; i++) {
 
-        let start_time_h = bufArrayX[i];
-        let stop_time_h = bufArrayX[i + 1];
+        
 
-        t1 = (start_time_h.slice(0, 2) * 3600 + start_time_h.slice(3) * 60) / 3600;
-        t2 = (stop_time_h.slice(0, 2) * 3600 + stop_time_h.slice(3) * 60) / 3600;
-        t = Math.abs(t2 - t1);
-        console.log(t);
-        En = coordXY.lastEnergi;
-        console.log(coordXY.lastEnergi);
-        // console.log(En);
+        for (let i = 1; i < bufArrayX.length; i++) {
 
-        // if ((i + 1) % 2 === 0) {
+            let start_time_h = bufArrayX[i - 1];
+            let stop_time_h = bufArrayX[i];
 
-        //     new_Ycoord = En + (t * battery_voltage * charge_current / 1000); //координата вверх
-        //     if (new_Ycoord > battery_power) new_Ycoord = battery_power
-        // }
-        // else {
-        //     new_Ycoord = En - (t * truck_power); //координата вниз
-        //     if (new_Ycoord < 0) new_Ycoord = 0
-        // }
+            t1 = (start_time_h.slice(0, 2) * 3600 + start_time_h.slice(3) * 60) / 3600;
+            t2 = (stop_time_h.slice(0, 2) * 3600 + stop_time_h.slice(3) * 60) / 3600;
+            t = Math.abs(t2 - t1);
+            console.log(t);
+            En = coordXY_day.lastEnergi;
+            console.log(En);
 
-        if ((i + 1) % 2 === 0) {
 
-            new_Ycoord = En + (t * battery_voltage * charge_current / 1000); //координата вверх
-            if (new_Ycoord > battery_power) {
-                new_Ycoord = battery_power;
-                coordXY.arrayY.push(new_Ycoord);
-                t = t + (battery_power - En) / battery_power;
-                th = Math.trunc(t);
-                tm = ((t - Math.trunc(t)) * 60).toFixed(0);
-                t = th + ':' + tm;
-                coordXY.labels.push(t);
+            if (i % 2 === 0) {
+                new_Ycoord = En + (t * battery_voltage * charge_current / 1000); //координата вверх
+                console.log(new_Ycoord);
 
+                if (new_Ycoord > battery_power) {
+                    new_Ycoord = battery_power;
+                    coordXY_day.arrayY.push(new_Ycoord);
+                    t = t1 + (new_Ycoord - En) * 1000 / (battery_voltage * charge_current);
+                    th = Math.trunc(t);
+                    tm = ((t - Math.trunc(t)) * 60).toFixed(0);
+                    t = th + ':' + tm;
+                    coordXY_day.labels.push(t);
+                }
             }
-        }
-        else {
-            new_Ycoord = En - (t * truck_power); //координата вниз
-            if (new_Ycoord < 0) {
-                new_Ycoord = 0;
-                coordXY.arrayY.push(new_Ycoord);
-                t = t + En / truck_power;
-                th = Math.trunc(t);
-                tm = ((t - Math.trunc(t)) * 60).toFixed(0);
-                t = th + ':' + tm;
-                coordXY.labels.push(t);
+            else {
+                new_Ycoord = En - (t * truck_power); //координата вниз
+                console.log(new_Ycoord);
+
+                if (new_Ycoord < 0) {
+                    new_Ycoord = 0;
+                    coordXY_day.arrayY.push(new_Ycoord);
+                    t = t1 + En / truck_power;
+                    console.log(t);
+                    th = Math.trunc(t);
+                    tm = ((t - Math.trunc(t)) * 60).toFixed(0);
+                    t = th + ':' + tm;
+                    coordXY_day.labels.push(t);
+                }
             }
+            coordXY_day.labels.push(bufArrayX[i]);
+            coordXY_day.arrayY.push(new_Ycoord);
         }
-        coordXY.labels.push(bufArrayX[i]);
-        coordXY.arrayY.push(new_Ycoord);
-        console.log(coordXY.labels);
-        console.log(coordXY.arrayY);
-    }
-    return coordXY;
+    //     coordXY_week.arrayY.push(coordXY_day.lastEnergi);
+    //     coordXY_week.labels.push(coordXY_day.lastTime);
+    // }
+
+
+    $('.max_soc').text(function () {
+        return Math.max.apply(null, coordXY_day.arrayY);
+    });
+    $('.min_soc').text(function () {
+        return Math.min.apply(null, coordXY_day.arrayY);
+    });
+    return coordXY_day;
 }
 
 $('.equel').click(function () {
@@ -159,8 +218,9 @@ $('.equel').click(function () {
             bufArrayX.push(buf_array[i][j]);
         }
     }
-    creatYCoord(coordXY, bufArrayX);
-    // console.log(arrayY);
-    createPlot(coordXY);
+    console.log(bufArrayX);
+    creatYCoord(coordXY_week, coordXY_day, bufArrayX);
+    createPlotDay(coordXY_day);
+    createPlotWeek(coordXY_week);
 });
 
