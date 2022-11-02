@@ -5,6 +5,7 @@ let buf_array = [];     //все значения времени введенн�
 let bufArrayX = ['00:00'];
 let count_ID = 1;
 let sum_h = 0;
+let count_tab = 0;
 let coordXY_day = {
     labels: [],         //все значения времени в формате 00:00 отображающиеся на графике
     arrayY: [],         //все значения емкости отображающиеся на графике
@@ -67,6 +68,8 @@ function createPlotDay(coordXY) {
         document.getElementById('myChart'),
         config
     );
+
+
 
     function scroller(scroll, chart) {
         console.log(scroll)
