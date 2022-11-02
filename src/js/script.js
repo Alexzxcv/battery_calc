@@ -1,7 +1,8 @@
 let power_batt = 0;
 let power_truck = 0;
 let buf_array = [];     //все значения времени введенные пользователем в формате 00:00 (буфер)        
-let bufArrayX = ['00:00']; //все значения времени в формате 00:00 (буфер)
+// let bufArrayX = ['00:00', '02:30', '04:30', '08:20', '10:15', '14:40', '18:30', '20:20', '22:22']; //все значения времени в формате 00:00 (буфер)
+let bufArrayX = ['00:00'];
 let count_ID = 1;
 let sum_h = 0;
 let coordXY_day = {
@@ -18,10 +19,9 @@ let coordXY_week = {
     labels: [],         //все значения времени в формате 00:00 отображающиеся на графике
     arrayY: [],         //все значения емкости отображающиеся на графике
     get lastEnergi() {
-        console.log(this.arrayY[this.arrayY.length - 1]);
         return this.arrayY[this.arrayY.length - 1];
     },
-    
+
 }
 
 $(function () {
@@ -40,7 +40,6 @@ $(function () {
 });
 
 function createPlotDay(coordXY) {
-
     const data = {
         labels: coordXY.labels,
         datasets: [{
@@ -54,17 +53,57 @@ function createPlotDay(coordXY) {
     const config = {
         type: 'line',
         data: data,
-        options: {}
+        options: {
+            scales: {
+                x: {
+                    min: 0,
+                    max: 10,
+                }
+            }
+        }
     };
 
     const myChart = new Chart(
         document.getElementById('myChart'),
         config
     );
+
+    function scroller(scroll, chart) {
+        console.log(scroll)
+        const dataLength = myChart.data.labels.length;
+        if (scroll.deltaY > 0) {
+
+            if (myChart.config.options.scales.x.max >= dataLength) {
+                myChart.config.options.scales.x.min = dataLength - 11;
+                myChart.config.options.scales.x.max = dataLength;
+            } else {
+                myChart.config.options.scales.x.min += 1;
+                myChart.config.options.scales.x.max += 1;
+            }
+        }
+        else if (scroll.deltaY < 0) {
+            if (myChart.config.options.scales.x.min <= 0) {
+                myChart.config.options.scales.x.min = 0;
+                myChart.config.options.scales.x.max = 10;
+            }
+            else {
+                myChart.config.options.scales.x.min -= 1;
+                myChart.config.options.scales.x.max -= 1;
+            }
+
+        }
+        else {
+
+        }
+        myChart.update();
+    }
+
+    myChart.canvas.addEventListener('wheel', (e) => {
+        scroller(e, myChart)
+    });
 }
 
 function createPlotWeek(coordXY) {
-
     const data = {
         labels: coordXY.labels,
         datasets: [{
@@ -81,12 +120,11 @@ function createPlotWeek(coordXY) {
         options: {}
     };
 
-    const myChart = new Chart(
+    const myChart_week = new Chart(
         document.getElementById('myChartWeek'),
         config
     );
 }
-
 
 $('.plus').click(function () {
     let start_time = $('.start').val();
@@ -130,8 +168,6 @@ $('.plus').click(function () {
     });
 });
 
-
-
 function creatYCoord(coordXY_week, coordXY_day, bufArrayX) {
     let battery_power = $('.power_batt').val();
     let battery_voltage = $('.battery_voltage').val();
@@ -144,15 +180,15 @@ function creatYCoord(coordXY_week, coordXY_day, bufArrayX) {
     let En = 0; //энергия в батарее
     let th = 0; //парс часов
     let tm = 0; //парс минут
+    let t_parse = 0;
+    let time_working = 0;
+    let time_charging = 0;
     coordXY_day.arrayY.push(battery_power);
     coordXY_day.labels.push('00:00');
     coordXY_week.arrayY.push(battery_power);
     coordXY_week.labels.push('00:00');
 
-    // for (let i = 1; i < 7; i++) {
-
-        
-
+    for (let i = 1; i < 7; i++) {
         for (let i = 1; i < bufArrayX.length; i++) {
 
             let start_time_h = bufArrayX[i - 1];
@@ -161,14 +197,10 @@ function creatYCoord(coordXY_week, coordXY_day, bufArrayX) {
             t1 = (start_time_h.slice(0, 2) * 3600 + start_time_h.slice(3) * 60) / 3600;
             t2 = (stop_time_h.slice(0, 2) * 3600 + stop_time_h.slice(3) * 60) / 3600;
             t = Math.abs(t2 - t1);
-            console.log(t);
             En = coordXY_day.lastEnergi;
-            console.log(En);
-
 
             if (i % 2 === 0) {
                 new_Ycoord = En + (t * battery_voltage * charge_current / 1000); //координата вверх
-                console.log(new_Ycoord);
 
                 if (new_Ycoord > battery_power) {
                     new_Ycoord = battery_power;
@@ -176,38 +208,51 @@ function creatYCoord(coordXY_week, coordXY_day, bufArrayX) {
                     t = t1 + (new_Ycoord - En) * 1000 / (battery_voltage * charge_current);
                     th = Math.trunc(t);
                     tm = ((t - Math.trunc(t)) * 60).toFixed(0);
-                    t = th + ':' + tm;
-                    coordXY_day.labels.push(t);
+                    t_parse = th + ':' + tm;
+                    coordXY_day.labels.push(t_parse);
                 }
+                time_charging += t;
             }
             else {
                 new_Ycoord = En - (t * truck_power); //координата вниз
-                console.log(new_Ycoord);
 
                 if (new_Ycoord < 0) {
                     new_Ycoord = 0;
                     coordXY_day.arrayY.push(new_Ycoord);
                     t = t1 + En / truck_power;
-                    console.log(t);
                     th = Math.trunc(t);
                     tm = ((t - Math.trunc(t)) * 60).toFixed(0);
-                    t = th + ':' + tm;
-                    coordXY_day.labels.push(t);
+                    t_parse = th + ':' + tm;
+                    coordXY_day.labels.push(t_parse);
                 }
+                time_working = Number(time_working) + Number(t);
             }
             coordXY_day.labels.push(bufArrayX[i]);
             coordXY_day.arrayY.push(new_Ycoord);
         }
-    //     coordXY_week.arrayY.push(coordXY_day.lastEnergi);
-    //     coordXY_week.labels.push(coordXY_day.lastTime);
-    // }
+        coordXY_week.arrayY.push(coordXY_day.lastEnergi);
+        coordXY_week.labels.push(coordXY_day.lastTime);
+    }
 
+    function percent_max(coordXY, battery_power) {
+        let max = Math.max.apply(null, coordXY.arrayY)
+        return max * 100 / battery_power;
+    }
 
+    $('.working').text(function () {
+        return (time_working.toFixed(1) + 'h');
+    });
+    $('.charging').text(function () {
+        return (time_charging.toFixed(1) + 'h');
+    });
     $('.max_soc').text(function () {
-        return Math.max.apply(null, coordXY_day.arrayY);
+        let max = Math.max.apply(null, coordXY_day.arrayY)
+        return (max * 100 / battery_power).toFixed(1) + '%';
+        // return Math.max.apply(null, coordXY_day.arrayY);
     });
     $('.min_soc').text(function () {
-        return Math.min.apply(null, coordXY_day.arrayY);
+        let min = Math.min.apply(null, coordXY_day.arrayY)
+        return (min * 100 / battery_power).toFixed(1) + '%';
     });
     return coordXY_day;
 }
@@ -218,7 +263,6 @@ $('.equel').click(function () {
             bufArrayX.push(buf_array[i][j]);
         }
     }
-    console.log(bufArrayX);
     creatYCoord(coordXY_week, coordXY_day, bufArrayX);
     createPlotDay(coordXY_day);
     createPlotWeek(coordXY_week);
