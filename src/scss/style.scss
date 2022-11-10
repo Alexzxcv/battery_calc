@@ -70,15 +70,22 @@ body {
         }
 
         .plot_day {
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 100%;
+            max-width: 680px;
+            width: 1000px;
             height: 250px;
             margin-top: 15px;
             background-color: #1d1c1c;
             color: white;
             border-radius: 15px;
+            overflow-x: scroll;
+
+            .containerPlot {
+                height: 250px;
+            }
 
         }
 
@@ -94,7 +101,6 @@ body {
     }
 
     &__calc {
-
 
         width: 300px;
         overflow-y: scroll;

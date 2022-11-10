@@ -1,8 +1,6 @@
-let power_batt = 0;
-let power_truck = 0;
 let buf_array = [];     //все значения времени введенные пользователем в формате 00:00 (буфер)        
-// let bufArrayX = ['00:00', '02:30', '04:30', '08:20', '10:15', '14:40', '18:30', '20:20', '22:22']; //все значения времени в формате 00:00 (буфер)
-let bufArrayX = ['00:00'];
+let bufArrayX = ['00:00', '02:30', '04:30', '08:20', '10:15', '14:40', '18:30', '20:20', '22:22']; //все значения времени в формате 00:00 (буфер)
+// let bufArrayX = ['00:00'];
 let count_ID = 1;
 let sum_h = 0;
 let count_tab = 0;
@@ -25,6 +23,36 @@ let coordXY_week = {
 
 }
 
+let data = {};
+let config  = {
+    type: 'line',
+    data: data,
+    options: {
+        maintainAspectRatio: false,
+        scales: {
+            x: {
+                min: 0,
+                max: 24,
+            }
+        }
+    }
+};
+const myChart = new Chart(
+    document.getElementById('myChart'),
+    config,
+);
+
+let dataWeek = {};
+let configWeek = {
+    type: 'line',
+    data: dataWeek,
+    options: {}
+};
+const myChart_week = new Chart(
+    document.getElementById('myChartWeek'),
+    configWeek
+);
+
 $(function () {
     $("[data-tooltip]").mousemove(function (eventObject) {
         $data_tooltip = $(this).attr("data-tooltip");
@@ -40,8 +68,10 @@ $(function () {
     });
 });
 
+
+
 function createPlotDay(coordXY) {
-    const data = {
+    let data = {
         labels: coordXY.labels,
         datasets: [{
             label: 'Day',
@@ -51,33 +81,25 @@ function createPlotDay(coordXY) {
         }]
     };
 
-    const config = {
-        type: 'line',
+    let config  = {
         data: data,
-        options: {
-            scales: {
-                x: {
-                    min: 0,
-                    max: 10,
-                }
-            }
-        }
     };
 
-    const myChart = new Chart(
-        document.getElementById('myChart'),
-        config
-    );
+    myChart.config.data = data;
+    myChart.update();
 
+    const containerPlot = document.querySelector('.containerPlot');
+    if (myChart.data.labels.length > 10) {
+        containerPlot.style.width = '1000px';
+    }
 
 
     function scroller(scroll, chart) {
-        console.log(scroll)
         const dataLength = myChart.data.labels.length;
         if (scroll.deltaY > 0) {
 
             if (myChart.config.options.scales.x.max >= dataLength) {
-                myChart.config.options.scales.x.min = dataLength - 11;
+                myChart.config.options.scales.x.min = dataLength - 25;
                 myChart.config.options.scales.x.max = dataLength;
             } else {
                 myChart.config.options.scales.x.min += 1;
@@ -87,7 +109,7 @@ function createPlotDay(coordXY) {
         else if (scroll.deltaY < 0) {
             if (myChart.config.options.scales.x.min <= 0) {
                 myChart.config.options.scales.x.min = 0;
-                myChart.config.options.scales.x.max = 10;
+                myChart.config.options.scales.x.max = 24;
             }
             else {
                 myChart.config.options.scales.x.min -= 1;
@@ -104,6 +126,7 @@ function createPlotDay(coordXY) {
     myChart.canvas.addEventListener('wheel', (e) => {
         scroller(e, myChart)
     });
+
 }
 
 function createPlotWeek(coordXY) {
@@ -118,21 +141,17 @@ function createPlotWeek(coordXY) {
     };
 
     const config = {
-        type: 'line',
         data: data,
-        options: {}
     };
-
-    const myChart_week = new Chart(
-        document.getElementById('myChartWeek'),
-        config
-    );
+    myChart_week.config.data = data;
+    myChart_week.update();
+    
 }
 
 $('.plus').click(function () {
-    let start_time = $('.start').val();
-    let stop_time = $('.stop').val();
-    let stash = $('.stash');
+    const start_time = $('.start').val();
+    const stop_time = $('.stop').val();
+    const stash = $('.stash');
 
     sum_h = Number(start_time.slice(0, 2)) + Number(stop_time.slice(0, 2));
     if ((start_time === "") || (stop_time === "")) {
@@ -160,9 +179,6 @@ $('.plus').click(function () {
 
     buf_array.push([start_time, stop_time]);
 
-    power_batt = $('.power_batt').val();
-    power_truck = $('.power_truck').val();
-
     count_ID++;
     $('.del').click(function () {
         const clickId = $(this).attr('id').substring(1);
@@ -172,10 +188,10 @@ $('.plus').click(function () {
 });
 
 function creatYCoord(coordXY_week, coordXY_day, bufArrayX) {
-    let battery_power = $('.power_batt').val();
-    let battery_voltage = $('.battery_voltage').val();
-    let truck_power = $('.power_truck').val();
-    let charge_current = $('.charge_current').val();
+    const battery_power = $('.power_batt').val();
+    const battery_voltage = $('.battery_voltage').val();
+    const charge_current = $('.charge_current').val();
+    const truck_power = $('.power_truck').val();
     let new_Ycoord = 0;
     let t = 0;  //общее время расчета
     let t1 = 0; //время старта
@@ -261,13 +277,13 @@ function creatYCoord(coordXY_week, coordXY_day, bufArrayX) {
 }
 
 $('.equel').click(function () {
-    for (let i = 0; i < buf_array.length; i++) {
-        for (let j = 0; j < 2; j++) {
-            bufArrayX.push(buf_array[i][j]);
-        }
-    }
-    creatYCoord(coordXY_week, coordXY_day, bufArrayX);
-    createPlotDay(coordXY_day);
-    createPlotWeek(coordXY_week);
+    // for (let i = 0; i < buf_array.length; i++) {
+    //     for (let j = 0; j < 2; j++) {
+    //         bufArrayX.push(buf_array[i][j]);
+    //     }
+    // }
+        creatYCoord(coordXY_week, coordXY_day, bufArrayX);
+        createPlotDay(coordXY_day);
+        createPlotWeek(coordXY_week);
 });
 
