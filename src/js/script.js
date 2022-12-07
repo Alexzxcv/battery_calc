@@ -1,6 +1,6 @@
 let buf_array = [];     //все значения времени введенные пользователем в формате 00:00 (буфер)        
-let bufArrayX = ['00:00', '02:30', '04:30', '08:20', '10:15', '14:40', '18:30', '20:20', '22:22']; //все значения времени в формате 00:00 (буфер)
-// let bufArrayX = ['00:00'];
+// let bufArrayX = ['00:00', '02:30', '04:30', '08:20', '10:15', '14:40', '18:30', '20:20', '22:22']; //все значения времени в формате 00:00 (буфер)
+let bufArrayX = ['00:00'];
 let count_ID = 1;
 let sum_h = 0;
 let count_tab = 0;
@@ -24,7 +24,7 @@ let coordXY_week = {
 }
 
 let data = {};
-let config  = {
+let config = {
     type: 'line',
     data: data,
     options: {
@@ -81,8 +81,14 @@ function createPlotDay(coordXY) {
         }]
     };
 
-    let config  = {
+    let config = {
         data: data,
+        legend: {
+            display: false
+        },
+        tooltips: {
+            enabled: false
+        }
     };
 
     myChart.config.data = data;
@@ -102,8 +108,8 @@ function createPlotDay(coordXY) {
                 myChart.config.options.scales.x.min = dataLength - 25;
                 myChart.config.options.scales.x.max = dataLength;
             } else {
-                myChart.config.options.scales.x.min += 1;
-                myChart.config.options.scales.x.max += 1;
+                myChart.config.options.scales.x.min += 12;
+                myChart.config.options.scales.x.max += 12;
             }
         }
         else if (scroll.deltaY < 0) {
@@ -112,8 +118,8 @@ function createPlotDay(coordXY) {
                 myChart.config.options.scales.x.max = 24;
             }
             else {
-                myChart.config.options.scales.x.min -= 1;
-                myChart.config.options.scales.x.max -= 1;
+                myChart.config.options.scales.x.min -= 12;
+                myChart.config.options.scales.x.max -= 12;
             }
 
         }
@@ -129,24 +135,23 @@ function createPlotDay(coordXY) {
 
 }
 
-function createPlotWeek(coordXY) {
-    const data = {
-        labels: coordXY.labels,
-        datasets: [{
-            label: 'Week',
-            backgroundColor: 'rgb(0, 0, 255)',
-            borderColor: 'rgb(0, 0, 255)',
-            data: coordXY.arrayY,
-        }]
-    };
+// function createPlotWeek(coordXY) {
+//     const data = {
+//         labels: coordXY.labels,
+//         datasets: [{
+//             label: 'Week',
+//             backgroundColor: 'rgb(0, 0, 255)',
+//             borderColor: 'rgb(0, 0, 255)',
+//             data: coordXY.arrayY,
+//         }]
+//     };
 
-    const config = {
-        data: data,
-    };
-    myChart_week.config.data = data;
-    myChart_week.update();
-    
-}
+//     const config = {
+//         data: data,
+//     };
+//     myChart_week.config.data = data;
+//     myChart_week.update();
+// }
 
 $('.plus').click(function () {
     const start_time = $('.start').val();
@@ -188,10 +193,13 @@ $('.plus').click(function () {
 });
 
 function creatYCoord(coordXY_week, coordXY_day, bufArrayX) {
+    coordXY_day.labels = [];
+    coordXY_day.arrayY = [];
     const battery_power = $('.power_batt').val();
     const battery_voltage = $('.battery_voltage').val();
     const charge_current = $('.charge_current').val();
     const truck_power = $('.power_truck').val();
+    console.log(truck_power);
     let new_Ycoord = 0;
     let t = 0;  //общее время расчета
     let t1 = 0; //время старта
@@ -218,7 +226,7 @@ function creatYCoord(coordXY_week, coordXY_day, bufArrayX) {
             t = Math.abs(t2 - t1);
             En = coordXY_day.lastEnergi;
 
-            if (i % 2 === 0) {
+            if (i % 2 == 0) {
                 new_Ycoord = En + (t * battery_voltage * charge_current / 1000); //координата вверх
 
                 if (new_Ycoord > battery_power) {
@@ -233,6 +241,11 @@ function creatYCoord(coordXY_week, coordXY_day, bufArrayX) {
                 time_charging += t;
             }
             else {
+
+                t1 = (start_time_h.slice(0, 2) * 3600 + start_time_h.slice(3) * 60) / 3600;
+                t2 = (stop_time_h.slice(0, 2) * 3600 + stop_time_h.slice(3) * 60) / 3600;
+                t = Math.abs(t2 - t1);
+                En = coordXY_day.lastEnergi;
                 new_Ycoord = En - (t * truck_power); //координата вниз
 
                 if (new_Ycoord < 0) {
@@ -277,13 +290,14 @@ function creatYCoord(coordXY_week, coordXY_day, bufArrayX) {
 }
 
 $('.equel').click(function () {
-    // for (let i = 0; i < buf_array.length; i++) {
-    //     for (let j = 0; j < 2; j++) {
-    //         bufArrayX.push(buf_array[i][j]);
-    //     }
-    // }
-        creatYCoord(coordXY_week, coordXY_day, bufArrayX);
-        createPlotDay(coordXY_day);
-        createPlotWeek(coordXY_week);
+    bufArrayX = ['00:00'];
+    for (let i = 0; i < buf_array.length; i++) {
+        for (let j = 0; j < 2; j++) {
+            bufArrayX.push(buf_array[i][j]);
+        }
+    }
+    creatYCoord(coordXY_week, coordXY_day, bufArrayX);
+    createPlotDay(coordXY_day);
+    createPlotWeek(coordXY_week);
 });
 

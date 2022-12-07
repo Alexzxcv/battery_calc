@@ -13,6 +13,8 @@ body {
     align-items: center;
     justify-content: center;
     background-color: black;
+    overflow-y: scroll;
+    margin-top: 50px;
 }
 
 ::-webkit-scrollbar {
@@ -34,81 +36,18 @@ body {
 
 .container {
     display: flex;
+    flex-direction: column;
     width: 980px;
-    height: 600px;
-
-
-    &__plot {
-        display: flex;
-        flex-direction: column;
-        width: 680px;
-
-        .result {
-            display: flex;
-            width: 100%;
-            height: 80px;
-            background-color: #1d1c1c;
-            color: white;
-            border-radius: 15px;
-
-            // padding: 15px;
-            .soc,
-            .work {
-                width: 50%;
-
-                h4 {
-                    margin: 15px 0 15px 30px;
-                    width: 165px;
-                    font-size: 18px;
-
-                    span {
-                        margin-left: 15px;
-                        float: right;
-                    }
-                }
-            }
-        }
-
-        .plot_day {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            max-width: 680px;
-            width: 1000px;
-            height: 250px;
-            margin-top: 15px;
-            background-color: #1d1c1c;
-            color: white;
-            border-radius: 15px;
-            overflow-x: scroll;
-
-            .containerPlot {
-                height: 250px;
-            }
-
-        }
-
-        .plot_trande {
-            display: flex;
-            width: 100%;
-            height: 250px;
-            margin-top: 15px;
-            background-color: #1d1c1c;
-            color: white;
-            border-radius: 15px;
-        }
-    }
 
     &__calc {
 
-        width: 300px;
+
+        width: 100%;
         overflow-y: scroll;
 
         .calc {
             display: flex;
-            flex-direction: column;
-            margin-left: 15px;
+            flex-direction: row;
 
             h3 {
                 // min-width: 100%;
@@ -129,54 +68,56 @@ body {
 
             select,
             input {
-                width: 180px;
+                width: 100px;
                 height: 30px;
                 background-color: #00000050;
                 border-radius: 10px;
                 color: white;
                 padding-left: 5px;
-                cursor: pointer;
+                float: left;
             }
 
             .battery_stat {
 
                 display: flex;
+
                 flex-direction: column;
+                justify-content: space-around;
                 background-color: #1d1c1c;
                 color: white;
                 border-radius: 15px;
-                padding: 15px;
+                padding: 15px 15px 0 15px;
+                min-width: 450px;
 
-            }
-
-            .truck_stat {
-                margin-top: 15px;
-                display: flex;
-                flex-direction: column;
-                background-color: #1d1c1c;
-                color: white;
-                border-radius: 15px;
-                padding: 15px;
-            }
-
-            .charge_stat {
-                margin-top: 15px;
-                display: flex;
-                flex-direction: column;
-                background-color: #1d1c1c;
-                color: white;
-                border-radius: 15px;
-                padding: 15px;
+                .point {
+                    display: flex;
+                    flex-direction: row;
+                    label {
+                        span {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            line-height: 30px;
+                            padding: 0 5px 0 5px;
+                        }
+                    }
+                    
+                }
+                .last_label {
+                    margin-bottom: 5px;
+                }
             }
 
             .stop_time {
-                margin-top: 15px;
+                margin-left: 15px;
                 display: flex;
                 flex-direction: column;
                 background-color: #1d1c1c;
                 color: white;
                 border-radius: 15px;
                 padding: 15px;
+                min-width: 280px;
+
 
                 .break_info {
                     display: flex;
@@ -197,7 +138,6 @@ body {
                             height: 17px;
                         }
                     }
-
                 }
 
                 #tooltip {
@@ -262,7 +202,12 @@ body {
                 }
 
                 .stash {
+                    overflow-y: scroll;
+                    max-height: 172px;
+                    min-height: 172px;
+                    margin-top: 15px;
                     .post {
+                        width: 100%;
                         padding-left: 2px;
                         margin-top: 15px;
                         display: flex;
@@ -270,12 +215,12 @@ body {
 
                         .time_step {
                             display: inline-block;
-                            width: 188px;
+                            width: 190px;
                         }
 
                         .del {
                             display: inline-block;
-                            width: 57px;
+                            min-width: 60px;
                             height: 18px;
                             border: 1px solid white;
                             text-align: center;
@@ -289,29 +234,99 @@ body {
                             user-select: none;
                         }
                     }
-
                 }
             }
 
-            .equel {
-                width: 100%;
-                height: 30px;
-                margin-top: 15px;
-                border-radius: 15px;
+            .result {
                 display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                user-select: none;
-                background-color: white;
-                color: black;
-                font-weight: 600;
-                transition-duration: 0.5s;
+                flex-direction: column;
+                justify-content: space-between;
+                width: 100%;
+                background-color: #1d1c1c;
+                color: white;
+                border-radius: 15px;
+                padding: 15px;
+                margin-left: 15px;
 
-                &:hover {
-                    padding-bottom: 3px;
+                    h4 {
+                        padding-bottom: 15px;
+                        width: 165px;
+                        font-size: 18px;
+    
+                        span {
+                            margin-left: 15px;
+                            float: right;
+                        }
+                    }
+                
+                .equel {
+                    width: 100%;
+                    height: 30px;
+                    margin-top: 15px;
+                    border-radius: 15px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    user-select: none;
+                    background-color: white;
+                    color: black;
+                    font-weight: 600;
+                    // flex: 0 1 auto;
+                    // transition-duration: 0.5s;
+                    @keyframes white_black {
+                        from {
+                            background-color: white;
+                        }
+                        to {
+                            background-color: black;
+                            color: white;
+                        }
+                    }
+                    &:hover {
+                        animation: white_black 0.2s both;
+                    }
+                    
+                
                 }
             }
+        }
+    }
+
+   
+    &__plot {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+
+
+        .plot_day {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 330px;
+            margin-top: 15px;
+            background-color: #1d1c1c;
+            color: white;
+            border-radius: 15px;
+            &:focus {
+                overflow: scroll;
+            }
+            #myChart {
+                overflow: scroll;
+            }
+        }
+
+        .plot_trande {
+            display: flex;
+            width: 100%;
+            height: 330px;
+            margin-top: 15px;
+            background-color: #1d1c1c;
+            color: white;
+            border-radius: 15px;
         }
     }
 }
