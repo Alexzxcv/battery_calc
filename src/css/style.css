@@ -270,11 +270,9 @@ body {
   color: white;
   border-radius: 15px;
 }
-.container__plot .plot_day:focus {
-  overflow: scroll;
-}
-.container__plot .plot_day #myChart {
-  overflow: scroll;
+.container__plot .plot_day .containerPlot {
+  width: 940px;
+  max-height: 250px;
 }
 .container__plot .plot_trande {
   display: flex;

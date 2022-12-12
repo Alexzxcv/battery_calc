@@ -311,11 +311,10 @@ body {
             background-color: #1d1c1c;
             color: white;
             border-radius: 15px;
-            &:focus {
-                overflow: scroll;
-            }
-            #myChart {
-                overflow: scroll;
+            
+            .containerPlot {
+                width: 940px;
+                max-height: 250px;
             }
         }
 
