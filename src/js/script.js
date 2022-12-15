@@ -1,19 +1,18 @@
 let buf_array = [];
-// let bufArrayX = ['2021-06-25T13:00:00', '2021-06-25T13:00:00', '11.12.2022 22:00', '08:20', '10:15', '14:40', '18:30', '20:20', '22:22']; //все значения времени в формате 00:00 (буфер)
 let bufArrayXY = [];
 let countID = 1;
 let count_tab = 0;
 const firstTime = new Date('11.12.2022 00:00 +0');
 let coordXY = [{ x: 0, y: 0 }];
+let coordXYWeek = [{ x: 0, y: 0 }];
 let realTime = new Date();
 let timeZone = realTime.getTimezoneOffset() * 60000;
-console.log(timeZone);
 
-
-var options = {
+let options = {
     chart: {
         height: 300,
         width: "100%",
+        type: 'line',
         animations: {
             initialAnimation: { enabled: false }
         },
@@ -35,6 +34,7 @@ var options = {
     yaxis: {
         floating: false,
         max: 100,
+        min: 0,
         labels: {
             show: true,
             style: {
@@ -56,15 +56,70 @@ var options = {
         }
     },
 };
-var chart = new ApexCharts(document.querySelector("#chart"), options);
+let chart = new ApexCharts(document.querySelector("#chart"), options);
 chart.render();
 
+let optionsWeek = {
+    chart: {
+        height: 300,
+        width: "100%",
+        type: 'line',
+        animations: {
+            initialAnimation: { enabled: false }
+        },
+        toolbar: {
+            show: false,
+        },
+    },
+    series: [
+        {
+            data: coordXYWeek,
+        }
+    ],
+    stroke: {
+        curve: 'smooth',
+    },
+    grid: {
+        show: false,
+    },
+    yaxis: {
+        floating: false,
+        max: 100,
+        min: 0,
+        labels: {
+            show: true,
+            style: {
+                colors: '#fff'
+            },
+            formatter: function (val) {
+                return `${val.toFixed(0)}%`;
+            }
+        }
+    },
+    xaxis: {
+        type: "datetime",
+        labels: {
+            show: true,
+            style: {
+                colors: '#fff'
+            },
+
+        }
+    },
+};
+let chartWeek = new ApexCharts(document.querySelector("#chartWeek"), optionsWeek);
+chartWeek.render();
 
 function createPlotDay(coordXY, chart) {
     chart.updateSeries([{
         data: coordXY,
     }])
-    return chart;
+}
+
+function createPlotWeek(coordXYWeek, chartWeek) {
+    chartWeek.updateSeries([{
+        data: coordXYWeek,
+    }])
 }
 
 $(function () {
@@ -109,10 +164,7 @@ $('.plus').click(function () {
     <span class="del" id="d${countID}">-</span></div>`;
     stash.append(stash_block);
     buf_array.push([+start_time_parse, +stop_time_parse]);
-    console.log(buf_array);
     countID++;
-
-
     $('.del').click(function () {
         const clickId = $(this).attr('id').substring(1);
         $(`#p${clickId}, #d${clickId}, .s${clickId}`).remove();
@@ -120,56 +172,41 @@ $('.plus').click(function () {
     });
 });
 
-let percent = (min, max, newYcoord) => {
-    if (newYcoord > max) {
-        max = newYcoord;
-        return max;
-    }
-    if (newYcoord < min) {
-        min = newYcoord;
-        return min;
-    }
-}
-
-function creatYCoord(coordXY, bufArrayXY) {
+function creatYCoord(coordXY, coordXYWeek, bufArrayXY) {
     coordXY.splice(0, coordXY.length);
-    let lastEnergi;
+    coordXYWeek.splice(0, coordXYWeek.length);
     const batteryPower = $('.power_batt').val();
     const batteryVoltage = $('.battery_voltage').val();
     const chargeCurrent = $('.charge_current').val();
     const truckPower = $('.power_truck').val();
     let max = 0;
     let min = 100;
+    let lastEnergi = batteryPower;
     let newYcoord = batteryPower;
+    let newYcoordPercent = 0;
     let calcTime = 0;       //общее время расчета
-    let timeWorking = 0;
-    let timeCharging = 0;
-    let shiftDay = 0;
-    let startTimeH = 0;
-    let stopTimeH = 0;
-    let gg = 0;
-    let lastTime = new Date('11.12.2022 00:00 +0');
-    newYcoord = newYcoord / (batteryPower / 100);
-    max = percent(min, max, newYcoord);
-    coordXY.push({ x: new Date(firstTime), y: newYcoord })
-    lastEnergi = batteryPower;
+    let timeWorking = 0;    //время работы 
+    let timeCharging = 0;   //время заряда
+    let shiftDay = 0;       //сдвиг дня
+    let startTimeH = 0;     //время начала паузы
+    let stopTimeH = 0;      //время конца паузы
+    let lastTime = new Date('11.13.2022 00:00 +0');
+    newYcoordPercent = newYcoord / (batteryPower / 100);
+    coordXY.push({ x: new Date(firstTime), y: newYcoordPercent })
+    coordXYWeek.push({ x: new Date(firstTime), y: newYcoordPercent })
     for (let j = 0; j < 7; j++) {
         for (let i = 1; i < bufArrayXY.length; i++) {
             startTimeH = (shiftDay + bufArrayXY[i - 1]) / 3600000;          //часы 
             stopTimeH = (shiftDay + bufArrayXY[i]) / 3600000;               //часы
-            calcTime = Math.abs(stopTimeH - startTimeH);                    // время в часах + сдвиг
+            calcTime = stopTimeH - startTimeH;                              // время в часах + сдвиг
             if (i % 2 == 0) {
                 newYcoord = lastEnergi + (calcTime * batteryVoltage * chargeCurrent / 1000);                        //координата вверх
-                if (newYcoord > batteryPower) {
+                if (newYcoord >= batteryPower) {
                     newYcoord = batteryPower;
                     calcTime = startTimeH + (newYcoord - lastEnergi) * 1000 / (batteryVoltage * chargeCurrent);     //часы
-                    newYcoord = newYcoord / (batteryPower / 100);                                                   //проценты
-                    max = percent(min, max, newYcoord);
-                    coordXY.push({ x: new Date(calcTime * 3600000), y: newYcoord });
+                    newYcoordPercent = newYcoord / (batteryPower / 100);
+                    coordXY.push({ x: new Date(calcTime * 3600000), y: newYcoordPercent });
                 }
-                lastEnergi = newYcoord;
-                newYcoord = newYcoord / (batteryPower / 100);
-                max = percent(min, max, newYcoord);
                 timeCharging += calcTime;
             }
             else {
@@ -177,29 +214,27 @@ function creatYCoord(coordXY, bufArrayXY) {
                 if (newYcoord < 0) {
                     newYcoord = 0;
                     calcTime = startTimeH + lastEnergi / truckPower;
-                    newYcoord = newYcoord / (batteryPower / 100);
-                    min = percent(min, max, newYcoord);
-                    coordXY.push({ x: new Date(calcTime * 3600000), y: newYcoord });
+                    newYcoordPercent = newYcoord / (batteryPower / 100);
+                    coordXY.push({ x: new Date(calcTime * 3600000), y: newYcoordPercent });
                 }
                 timeWorking = ((Number(timeWorking) + Number(calcTime) * 3600000) - new Date(lastTime + shiftDay)) / 3600000;
-                lastEnergi = newYcoord;
-                newYcoord = newYcoord / (batteryPower / 100);
-                min = percent(min, max, newYcoord);
             }
-            coordXY.push({ x: new Date(shiftDay + bufArrayXY[i]), y: newYcoord });
-            gg = shiftDay + bufArrayXY[i];
+            lastEnergi = newYcoord;
+            newYcoordPercent = newYcoord / (batteryPower / 100);
+            coordXY.push({ x: new Date(shiftDay + bufArrayXY[i]), y: newYcoordPercent });
         }
-        calcTime = new Date(gg);
-        newYcoord = lastEnergi - (calcTime * truckPower);
+        calcTime = new Date(+lastTime + shiftDay - (bufArrayXY[bufArrayXY.length - 1] + shiftDay)) / 3600000;
+        newYcoord = lastEnergi - (calcTime * truckPower); //координата вниз
         if (newYcoord < 0) {
             newYcoord = 0;
             calcTime = stopTimeH + lastEnergi / truckPower;
-            newYcoord = newYcoord / (batteryPower / 100);
-            min = percent(min, max, newYcoord);
-            coordXY.push({ x: new Date(calcTime * 3600000), y: newYcoord })
+            newYcoordPercent = newYcoord / (batteryPower / 100);
+            coordXY.push({ x: new Date(calcTime * 3600000), y: newYcoordPercent });
         }
+        newYcoordPercent = newYcoord / (batteryPower / 100);
+        coordXY.push({ x: new Date(+lastTime + shiftDay), y: newYcoordPercent })
+        coordXYWeek.push({ x: new Date(+lastTime + shiftDay), y: newYcoordPercent })
         shiftDay += 86400000;
-        coordXY.push({ x: new Date(+lastTime + shiftDay), y: newYcoord })
         timeWorking = ((Number(timeWorking) + Number(calcTime) * 3600000) - new Date(lastTime + shiftDay)) / 3600000;
         lastEnergi = newYcoord;
     }
@@ -216,23 +251,24 @@ function creatYCoord(coordXY, bufArrayXY) {
     $('.min_soc').text(function () {
         return (min + '%');
     });
-    return coordXY;
 }
 
-
-
 $('.equel').click(function () {
-    bufArrayXY = [+firstTime,];
-
+    if (buf_array.length === 0) {
+        return;
+    }
+    bufArrayXY = [+firstTime]
     for (let i = 0; i < buf_array.length; i++) {
         for (let j = 0; j < 2; j++) {
             bufArrayXY.push(buf_array[i][j] + Math.abs(timeZone));
         }
     }
-    console.log(bufArrayXY);
-    creatYCoord(coordXY, bufArrayXY);
+    creatYCoord(coordXY, coordXYWeek, bufArrayXY);
     createPlotDay(coordXY, chart);
-    // createPlotWeek(coordXY_week);
+    createPlotWeek(coordXYWeek, chartWeek);
+    for (let i = 1; i < countID; i++) {
+        $(`#p${i}, #d${i}, .s${i}`).remove();
+    }
     bufArrayXY.splice(0, bufArrayXY.length);
     buf_array.splice(0, buf_array.length);
 });

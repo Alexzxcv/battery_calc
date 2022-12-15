@@ -68,15 +68,15 @@
                         </label>
                         <label>
                             <h4>Charge current</h4>
-                            <input name="carger_curr" class="charge_current" type="text" value="20.6" disabled>
+                            <input name="carger_curr" class="charge_current" type="text" value="206" disabled>
                             <span>A</span>
                         </label>
                     </div>
                     <h3>Truck</h3>
                     <div class="point last_label">
-                        <label >
+                        <label>
                             <h4>Power consumption</h4>
-                            <input class="power_truck" type="text" value="2">
+                            <input class="power_truck" type="text" value="0.1">
                             <span>kWh/h</span>
                         </label>
                     </div>
@@ -89,6 +89,7 @@
                                 data-tooltip="Breaks in work time </br> описание блока" src="img/info.svg" alt="i">
                         </div>
                     </div>
+                    
                     <div id="tooltip"></div>
                     <div class="block_row">
                         <div class="block_column">
@@ -117,23 +118,15 @@
             </form>
         </div>
         <div class="container__plot">
-
             <div class="plot_day">
-                <div class="containerPlot" id="chart">  
-                <!-- <canvas id="chart" width="950" height="320"></canvas> -->
-            </div>
-
+                <div class="containerPlot" id="chart"></div>
             </div>
             <div class="plot_trande">
-                <canvas id="myChart_week" width="670" height="240"></canvas>
+                <div class="containerPlot" id="chartWeek"></div>
             </div>
         </div>
-
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-
-    <script src="js/script.js"></script>
-
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+        <script src="js/script.js"></script>
 </body>
 
 </html>
