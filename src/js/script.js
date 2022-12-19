@@ -1,15 +1,13 @@
 let buf_array = [];
 let bufArrayXY = [];
-let countID = 1;
+let countID = 0;
 let count_tab = 0;
 const firstTime = new Date('1.1.2022 00:00 +0');
-let coordXY = [{ x: 0, y: 0 }];
-let coordXYWeek = [{ x: 0, y: 0 }];
 let realTime = new Date();
 let timeZone = realTime.getTimezoneOffset() * 60000;
 
 let batteryPower = 4.94;
-let chargeCurrent = 20.6;
+let chargeCurrent = 103;
 
 $('.battery_voltage').change(function () {
     const batteryVoltage = $('.battery_voltage').val();
@@ -38,6 +36,61 @@ $('.charge_rate').change(function () {
     });
 });
 
+let coordXY = [
+    { x: 1640995200000, y: 100 },
+    { x: 1641038400000, y: 51.41700404858299 },
+    { x: 1641041895145, y: 100 },
+    { x: 1641042000000, y: 100 },
+    { x: 1641060000000, y: 79.75708502024291 },
+    { x: 1641061456310, y: 100 },
+    { x: 1641063600000, y: 100 },
+    { x: 1641081600000, y: 79.75708502024291 },
+    { x: 1641124800000, y: 31.174089068825907 },
+    { x: 1641128400000, y: 81.21457489878543 },
+    { x: 1641146400000, y: 60.97165991902834 },
+    { x: 1641149207766, y: 100 },
+    { x: 1641150000000, y: 100 },
+    { x: 1641168000000, y: 79.75708502024291 },
+    { x: 1641211200000, y: 31.174089068825907 },
+    { x: 1641214800000, y: 81.21457489878543 },
+    { x: 1641232800000, y: 60.97165991902834 },
+    { x: 1641235607766, y: 100 },
+    { x: 1641236400000, y: 100 },
+    { x: 1641254400000, y: 79.75708502024291 },
+    { x: 1641297600000, y: 31.174089068825907 },
+    { x: 1641301200000, y: 81.21457489878543 },
+    { x: 1641319200000, y: 60.97165991902834 },
+    { x: 1641322007766, y: 100 },
+    { x: 1641322800000, y: 100 },
+    { x: 1641340800000, y: 79.75708502024291 },
+    { x: 1641384000000, y: 31.174089068825907 },
+    { x: 1641387600000, y: 81.21457489878543 },
+    { x: 1641405600000, y: 60.97165991902834 },
+    { x: 1641408407766, y: 100 },
+    { x: 1641409200000, y: 100 },
+    { x: 1641427200000, y: 79.75708502024291 },
+    { x: 1641470400000, y: 31.174089068825907 },
+    { x: 1641474000000, y: 81.21457489878543 },
+    { x: 1641492000000, y: 60.97165991902834 },
+    { x: 1641494807766, y: 100 },
+    { x: 1641495600000, y: 100 },
+    { x: 1641513600000, y: 79.75708502024291 },
+    { x: 1641556800000, y: 31.174089068825907 },
+    { x: 1641560400000, y: 81.21457489878543 },
+    { x: 1641578400000, y: 60.97165991902834 },
+    { x: 1641581207766, y: 100 },
+    { x: 1641582000000, y: 100 },
+    { x: 1641600000000, y: 79.75708502024291 },];
+let coordXYWeek = [
+    { x: 1640995200000, y: 100 },
+    { x: 1641081600000, y: 79.75708502024291 },
+    { x: 1641168000000, y: 79.75708502024291 },
+    { x: 1641254400000, y: 79.75708502024291 },
+    { x: 1641340800000, y: 79.75708502024291 },
+    { x: 1641427200000, y: 79.75708502024291 },
+    { x: 1641513600000, y: 79.75708502024291 },
+    { x: 1641600000000, y: 79.75708502024291 },];
+
 let options = {
     chart: {
         height: 300,
@@ -52,7 +105,8 @@ let options = {
     },
     series: [
         {
-            data: coordXY,
+            name: 'SOC',
+            data: '',
         },
     ],
     stroke: {
@@ -89,11 +143,20 @@ let options = {
         },
     },
 };
+
 let chart = new ApexCharts(document.querySelector("#chart"), options);
 chart.render();
 
 let chartWeek = new ApexCharts(document.querySelector("#chartWeek"), options);
 chartWeek.render();
+
+chart.updateSeries([{
+    data: coordXY,
+}]);
+
+chartWeek.updateSeries([{
+    data: coordXYWeek,
+}]);
 
 function createPlotDay(coordXY, chart) {
     chart.updateSeries([{
@@ -136,11 +199,7 @@ $('.plus').click(function () {
     }
     for (let i = 0; i < buf_array.length; i++) {
         for (let j = 0; j < 2; j++) {
-
-            if ((start_time === buf_array[i][j]) || (stop_time === buf_array[i][j])) {
-                return;
-            }
-            if (start_time < buf_array[buf_array.length - 1][j]) {
+            if ((+(new Date(`1.1.2022 ${start_time}`)) === buf_array[i][j]) || (+(new Date(`1.1.2022 ${stop_time}`)) === buf_array[i][j])) {
                 return;
             }
         }
@@ -154,6 +213,11 @@ $('.plus').click(function () {
         const clickId = $(this).attr('id').substring(1);
         $(`#p${clickId}, #d${clickId}, .s${clickId}`).remove();
         buf_array.splice(clickId, 1);
+        for (let i = 0; i < buf_array.length; i++) {
+            for (let j = 0; j < 2; j++) {
+                bufArrayXY.push(buf_array[i][j] + ~timeZone);
+            }
+        }
     });
 });
 
@@ -181,8 +245,8 @@ function creatYCoord(coordXY, coordXYWeek, bufArrayXY) {
     if (newYcoordPercent < min) {
         min = newYcoordPercent;
     }
-    coordXY.push({ x: new Date(firstTime), y: newYcoordPercent })
-    coordXYWeek.push({ x: new Date(firstTime), y: newYcoordPercent })
+    coordXY.push({ x: +(new Date(firstTime)), y: newYcoordPercent })
+    coordXYWeek.push({ x: +(new Date(firstTime)), y: newYcoordPercent })
     for (let j = 0; j < 7; j++) {
         for (let i = 1; i < bufArrayXY.length; i++) {
             startTimeH = (shiftDay + bufArrayXY[i - 1]) / 3600000;          //часы 
@@ -200,7 +264,7 @@ function creatYCoord(coordXY, coordXYWeek, bufArrayXY) {
                     if (newYcoordPercent < min) {
                         min = newYcoordPercent;
                     }
-                    coordXY.push({ x: new Date(calcTime * 3600000), y: newYcoordPercent });
+                    coordXY.push({ x: +(new Date(calcTime * 3600000)), y: newYcoordPercent });
                     calcTime = calcTime - startTimeH;
                 }
                 timeCharging += calcTime;
@@ -217,9 +281,8 @@ function creatYCoord(coordXY, coordXYWeek, bufArrayXY) {
                     if (newYcoordPercent < min) {
                         min = newYcoordPercent;
                     }
-                    coordXY.push({ x: new Date(calcTime * 3600000), y: newYcoordPercent });
+                    coordXY.push({ x: +(new Date(calcTime * 3600000)), y: newYcoordPercent });
                     calcTime = calcTime - startTimeH;
-
                 }
                 timeWorking += calcTime;
             }
@@ -231,7 +294,7 @@ function creatYCoord(coordXY, coordXYWeek, bufArrayXY) {
             if (newYcoordPercent < min) {
                 min = newYcoordPercent;
             }
-            coordXY.push({ x: new Date(shiftDay + bufArrayXY[i]), y: newYcoordPercent });
+            coordXY.push({ x: +(new Date(shiftDay + bufArrayXY[i])), y: newYcoordPercent });
         }
         calcTime = new Date(+lastTime + shiftDay - (bufArrayXY[bufArrayXY.length - 1] + shiftDay)) / 3600000;
         newYcoord = lastEnergi - (calcTime * truckPower); //координата вниз
@@ -245,7 +308,7 @@ function creatYCoord(coordXY, coordXYWeek, bufArrayXY) {
             if (newYcoordPercent < min) {
                 min = newYcoordPercent;
             }
-            coordXY.push({ x: new Date(calcTime * 3600000), y: newYcoordPercent });
+            coordXY.push({ x: +(new Date(calcTime * 3600000)), y: newYcoordPercent });
             calcTime = calcTime - startTimeH;
         }
         newYcoordPercent = newYcoord / (batteryPower / 100);
@@ -255,13 +318,12 @@ function creatYCoord(coordXY, coordXYWeek, bufArrayXY) {
         if (newYcoordPercent < min) {
             min = newYcoordPercent;
         }
-        coordXY.push({ x: new Date(+lastTime + shiftDay), y: newYcoordPercent })
-        coordXYWeek.push({ x: new Date(+lastTime + shiftDay), y: newYcoordPercent })
+        coordXY.push({ x: +(new Date(+lastTime + shiftDay)), y: newYcoordPercent })
+        coordXYWeek.push({ x: +(new Date(+lastTime + shiftDay)), y: newYcoordPercent })
         shiftDay += 86400000;
         timeWorking += calcTime;
         lastEnergi = newYcoord;
     }
-
     $('.working').text(function () {
         return (timeWorking.toFixed(1) + 'h');
     });
@@ -269,10 +331,10 @@ function creatYCoord(coordXY, coordXYWeek, bufArrayXY) {
         return (timeCharging.toFixed(1) + 'h');
     });
     $('.max_soc').text(function () {
-        return (max + '%');
+        return (max.toFixed(0) + '%');
     });
     $('.min_soc').text(function () {
-        return (min + '%');
+        return (min.toFixed(0) + '%');
     });
 }
 
@@ -283,12 +345,12 @@ $('.equel').click(function () {
     bufArrayXY = [+firstTime]
     for (let i = 0; i < buf_array.length; i++) {
         for (let j = 0; j < 2; j++) {
-            bufArrayXY.push(buf_array[i][j] + Math.abs(timeZone));
+            bufArrayXY.push(buf_array[i][j] + ~timeZone);
         }
     }
     creatYCoord(coordXY, coordXYWeek, bufArrayXY);
     createPlotDay(coordXY, chart);
     createPlotWeek(coordXYWeek, chartWeek);
-    bufArrayXY.splice(0, bufArrayXY.length);
-    buf_array.splice(0, buf_array.length);
+    // bufArrayXY.splice(0, bufArrayXY.length);
+    // buf_array.splice(0, buf_array.length);
 });

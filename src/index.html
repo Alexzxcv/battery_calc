@@ -8,8 +8,6 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/jquery.min.js"></script>
-    <!-- <script src="js/chart.min.js"></script> -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script> -->
 
     <title>Document</title>
 </head>
@@ -53,23 +51,23 @@
                         <label>
                             <h4>Charge rate</h4>
                             <select name="charge_rate" class="charge_rate">
-                                <option selected value="0.1">0.1</option>
+                                <option value="0.1">0.1</option>
                                 <option value="0.2">0.2</option>
-                                <option value="0.5">0.5</option>
+                                <option selected value="0.5">0.5</option>
                                 <option value="1">1</option>
                             </select>
                             <span>C</span>
                         </label>
                         <label>
                             <h4>Charge current</h4>
-                            <span class="charge_current">20.6 A</span>
+                            <span class="charge_current">103.0 A</span>
                         </label>
                     </div>
                     <h3>Truck</h3>
                     <div class="point last_label">
                         <label>
                             <h4>Power consumption</h4>
-                            <input class="power_truck" type="text" value="0.1">
+                            <input class="power_truck" type="text" value="0.2">
                             <span>kWh/h</span>
                         </label>
                     </div>
@@ -82,7 +80,7 @@
                                 data-tooltip="Breaks in work time </br> описание блока" src="img/info.svg" alt="i">
                         </div>
                     </div>
-                    
+
                     <div id="tooltip"></div>
                     <div class="block_row">
                         <div class="block_column">
@@ -103,10 +101,10 @@
 
                 <div class="result">
                     <h3>Statistic</h3>
-                    <h4>Max SOC:<span class="max_soc">100%</span></h4>
-                    <h4>Min SOC:<span class="min_soc">10%</span></h4>
-                    <h4>Working:<span class="working">24h</span></h4>
-                    <h4>Charging:<span class="charging">24h</span></h4>
+                    <h5 class="res_tick">Max SOC:<span class="max_soc">100%</span></h5>
+                    <h5 class="res_tick">Min SOC:<span class="min_soc">31%</span></h5>
+                    <h5 class="res_tick">Working:<span class="working">154.0h</span></h5>
+                    <h5 class="res_tick">Charging:<span class="charging">12.1h</span></h5>
                 </div>
             </form>
         </div>

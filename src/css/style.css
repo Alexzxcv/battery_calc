@@ -254,19 +254,20 @@ body {
 .container__calc .calc .result {
   display: flex;
   flex-direction: column;
-  width: 105%;
+  width: 100%;
   background-color: #1d1c1c;
   color: white;
   border-radius: 15px;
   padding: 15px;
   margin-left: 15px;
 }
-.container__calc .calc .result h4 {
-  padding-bottom: 15px;
-  width: 165px;
-  font-size: 18px;
+.container__calc .calc .result h5 {
+  padding-top: 15px;
+  width: 100%;
+  line-height: 30px;
+  font-size: 20px;
 }
-.container__calc .calc .result h4 span {
+.container__calc .calc .result h5 span {
   margin-left: 15px;
   float: right;
 }
