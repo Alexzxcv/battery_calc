@@ -6,6 +6,17 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
+@keyframes white_black {
+    from {
+        background-color: white;
+    }
+
+    to {
+        background-color: black;
+        color: white;
+    }
+}
+
 body {
     font-family: "Poppins", sans-serif;
     height: 100vh;
@@ -41,16 +52,11 @@ body {
 
     &__calc {
 
-
-        width: 100%;
-        overflow-y: scroll;
-
         .calc {
             display: flex;
             flex-direction: row;
 
             h3 {
-                // min-width: 100%;
                 text-align: left;
                 font-weight: bold;
                 font-size: 20px;
@@ -71,29 +77,46 @@ body {
                 width: 100px;
                 height: 30px;
                 background-color: #00000050;
-                border-radius: 10px;
+                border-radius: 8px;
+                border: 1px solid white;
                 color: white;
                 padding-left: 5px;
                 float: left;
+
+                option {
+                    font-size: 17px;
+                    border-radius: 5px;
+                    color: white;
+                    background-color: #1d1c1c;
+                }
             }
 
             .battery_stat {
 
                 display: flex;
-
                 flex-direction: column;
-                justify-content: space-around;
                 background-color: #1d1c1c;
                 color: white;
                 border-radius: 15px;
-                padding: 15px 15px 0 15px;
+                padding: 0 15px 0 15px;
                 min-width: 450px;
+
+                h3 {
+                    text-align: left;
+                    font-weight: bold;
+                    font-size: 20px;
+                    letter-spacing: 2px;
+                    text-transform: uppercase;
+                    letter-spacing: 0.1px;
+                    padding-top: 15px;
+                }
 
                 .point {
                     display: flex;
                     flex-direction: row;
 
                     label {
+
                         span {
                             display: flex;
                             align-items: center;
@@ -119,7 +142,6 @@ body {
                 border-radius: 15px;
                 padding: 15px;
                 min-width: 283px;
-
 
                 .break_info {
                     display: flex;
@@ -186,7 +208,7 @@ body {
                     height: 75px;
                     margin-top: 15px;
                     padding: 0;
-                    border-radius: 15px;
+                    border-radius: 8px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -199,15 +221,33 @@ body {
                     transition-duration: 0.5s;
 
                     &:hover {
-                        transform: scale(1.1);
+                        animation: white_black 0.2s both;
+                    }
+                }
+
+                .equel {
+                    width: 100%;
+                    height: 30px;
+                    margin-top: 15px;
+                    border-radius: 8px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    user-select: none;
+                    background-color: white;
+                    color: black;
+                    font-weight: 600;
+
+                    &:hover {
+                        animation: white_black 0.2s both;
                     }
                 }
 
                 .stash {
                     overflow-y: scroll;
-                    max-height: 172px;
-                    min-height: 172px;
-                    margin-top: 15px;
+                    max-height: 135px;
+                    min-height: 135px;
 
                     .post {
                         width: 100%;
@@ -243,8 +283,7 @@ body {
             .result {
                 display: flex;
                 flex-direction: column;
-                justify-content: space-between;
-                width: 100%;
+                width: 105%;
                 background-color: #1d1c1c;
                 color: white;
                 border-radius: 15px;
@@ -261,51 +300,14 @@ body {
                         float: right;
                     }
                 }
-
-                .equel {
-                    width: 100%;
-                    height: 30px;
-                    margin-top: 15px;
-                    border-radius: 15px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    cursor: pointer;
-                    user-select: none;
-                    background-color: white;
-                    color: black;
-                    font-weight: 600;
-
-                    // flex: 0 1 auto;
-                    // transition-duration: 0.5s;
-                    @keyframes white_black {
-                        from {
-                            background-color: white;
-                        }
-
-                        to {
-                            background-color: black;
-                            color: white;
-                        }
-                    }
-
-                    &:hover {
-                        animation: white_black 0.2s both;
-                    }
-
-
-                }
             }
         }
     }
-
 
     &__plot {
         display: flex;
         flex-direction: column;
         width: 100%;
-
-
 
         .plot_day {
             display: flex;
@@ -341,7 +343,6 @@ body {
                 max-height: 250px;
                 color: black;
             }
-
         }
     }
 }

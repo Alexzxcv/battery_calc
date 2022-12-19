@@ -2,7 +2,7 @@ let buf_array = [];
 let bufArrayXY = [];
 let countID = 1;
 let count_tab = 0;
-const firstTime = new Date('11.12.2022 00:00 +0');
+const firstTime = new Date('1.1.2022 00:00 +0');
 let coordXY = [{ x: 0, y: 0 }];
 let coordXYWeek = [{ x: 0, y: 0 }];
 let realTime = new Date();
@@ -23,10 +23,10 @@ let options = {
     series: [
         {
             data: coordXY,
-        }
+        },
     ],
     stroke: {
-        curve: 'smooth',
+        curve: 'straight',
     },
     grid: {
         show: false,
@@ -42,8 +42,8 @@ let options = {
             },
             formatter: function (val) {
                 return `${val.toFixed(0)}%`;
-            }
-        }
+            },
+        },
     },
     xaxis: {
         type: "datetime",
@@ -52,62 +52,17 @@ let options = {
             style: {
                 colors: '#fff'
             },
-
-        }
+            datetimeFormatter: {
+                month: 'd',
+                day: 'd',
+            },
+        },
     },
 };
 let chart = new ApexCharts(document.querySelector("#chart"), options);
 chart.render();
 
-let optionsWeek = {
-    chart: {
-        height: 300,
-        width: "100%",
-        type: 'line',
-        animations: {
-            initialAnimation: { enabled: false }
-        },
-        toolbar: {
-            show: false,
-        },
-    },
-    series: [
-        {
-            data: coordXYWeek,
-        }
-    ],
-    stroke: {
-        curve: 'smooth',
-    },
-    grid: {
-        show: false,
-    },
-    yaxis: {
-        floating: false,
-        max: 100,
-        min: 0,
-        labels: {
-            show: true,
-            style: {
-                colors: '#fff'
-            },
-            formatter: function (val) {
-                return `${val.toFixed(0)}%`;
-            }
-        }
-    },
-    xaxis: {
-        type: "datetime",
-        labels: {
-            show: true,
-            style: {
-                colors: '#fff'
-            },
-
-        }
-    },
-};
-let chartWeek = new ApexCharts(document.querySelector("#chartWeek"), optionsWeek);
+let chartWeek = new ApexCharts(document.querySelector("#chartWeek"), options);
 chartWeek.render();
 
 function createPlotDay(coordXY, chart) {
@@ -141,8 +96,8 @@ $('.plus').click(function () {
     const stash = $('.stash');
     const start_time = $('.start').val();
     const stop_time = $('.stop').val();
-    const start_time_parse = new Date(`11.12.2022 ${start_time}`);
-    const stop_time_parse = new Date(`11.12.2022 ${stop_time}`);
+    const start_time_parse = new Date(`1.1.2022 ${start_time}`);
+    const stop_time_parse = new Date(`1.1.2022 ${stop_time}`);
     if ((start_time === "") || (stop_time === "")) {
         return;
     }
@@ -190,7 +145,7 @@ function creatYCoord(coordXY, coordXYWeek, bufArrayXY) {
     let shiftDay = 0;       //сдвиг дня
     let startTimeH = 0;     //время начала паузы
     let stopTimeH = 0;      //время конца паузы
-    let lastTime = new Date('11.13.2022 00:00 +0');
+    let lastTime = new Date('1.2.2022 00:00 +0');
     newYcoordPercent = newYcoord / (batteryPower / 100);
     coordXY.push({ x: new Date(firstTime), y: newYcoordPercent })
     coordXYWeek.push({ x: new Date(firstTime), y: newYcoordPercent })
@@ -206,6 +161,7 @@ function creatYCoord(coordXY, coordXYWeek, bufArrayXY) {
                     calcTime = startTimeH + (newYcoord - lastEnergi) * 1000 / (batteryVoltage * chargeCurrent);     //часы
                     newYcoordPercent = newYcoord / (batteryPower / 100);
                     coordXY.push({ x: new Date(calcTime * 3600000), y: newYcoordPercent });
+                    calcTime = calcTime - startTimeH;
                 }
                 timeCharging += calcTime;
             }
@@ -216,8 +172,10 @@ function creatYCoord(coordXY, coordXYWeek, bufArrayXY) {
                     calcTime = startTimeH + lastEnergi / truckPower;
                     newYcoordPercent = newYcoord / (batteryPower / 100);
                     coordXY.push({ x: new Date(calcTime * 3600000), y: newYcoordPercent });
+                    calcTime = calcTime - startTimeH;
+
                 }
-                timeWorking = ((Number(timeWorking) + Number(calcTime) * 3600000) - new Date(lastTime + shiftDay)) / 3600000;
+                timeWorking += calcTime;
             }
             lastEnergi = newYcoord;
             newYcoordPercent = newYcoord / (batteryPower / 100);
@@ -230,12 +188,13 @@ function creatYCoord(coordXY, coordXYWeek, bufArrayXY) {
             calcTime = stopTimeH + lastEnergi / truckPower;
             newYcoordPercent = newYcoord / (batteryPower / 100);
             coordXY.push({ x: new Date(calcTime * 3600000), y: newYcoordPercent });
+            calcTime = calcTime - startTimeH;
         }
         newYcoordPercent = newYcoord / (batteryPower / 100);
         coordXY.push({ x: new Date(+lastTime + shiftDay), y: newYcoordPercent })
         coordXYWeek.push({ x: new Date(+lastTime + shiftDay), y: newYcoordPercent })
         shiftDay += 86400000;
-        timeWorking = ((Number(timeWorking) + Number(calcTime) * 3600000) - new Date(lastTime + shiftDay)) / 3600000;
+        timeWorking += calcTime;
         lastEnergi = newYcoord;
     }
 
@@ -266,9 +225,6 @@ $('.equel').click(function () {
     creatYCoord(coordXY, coordXYWeek, bufArrayXY);
     createPlotDay(coordXY, chart);
     createPlotWeek(coordXYWeek, chartWeek);
-    for (let i = 1; i < countID; i++) {
-        $(`#p${i}, #d${i}, .s${i}`).remove();
-    }
     bufArrayXY.splice(0, bufArrayXY.length);
     buf_array.splice(0, buf_array.length);
 });

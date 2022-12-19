@@ -23,7 +23,7 @@
                     <div class="point">
                         <label>
                             <h4>Voltage</h4>
-                            <select class="battery_voltage" name="battery_volt"
+                            <select class="battery_voltage select-css" name="battery_volt"
                                 onchange="document.calculator.battery_en.value = eval(document.calculator.battery_volt.value * document.calculator.battery_cap.value / 1000),
                         document.calculator.carger_curr.value = eval((document.calculator.charge_rate.value * document.calculator.battery_cap.value).toFixed(2))">
                                 <option selected value="24">24</option>
@@ -68,7 +68,7 @@
                         </label>
                         <label>
                             <h4>Charge current</h4>
-                            <input name="carger_curr" class="charge_current" type="text" value="206" disabled>
+                            <input name="carger_curr" class="charge_current" type="text" value="20.6" disabled>
                             <span>A</span>
                         </label>
                     </div>
@@ -104,6 +104,7 @@
                         </div>
                         <span class="plus">+</span>
                     </div>
+                    <div class="equel">Calculate</div>
                     <div class="stash block_column"></div>
                 </div>
 
@@ -113,7 +114,6 @@
                     <h4>Min SOC:<span class="min_soc">10%</span></h4>
                     <h4>Working:<span class="working">24h</span></h4>
                     <h4>Charging:<span class="charging">24h</span></h4>
-                    <div class="equel">Calculate</div>
                 </div>
             </form>
         </div>
