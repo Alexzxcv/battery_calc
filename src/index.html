@@ -23,9 +23,7 @@
                     <div class="point">
                         <label>
                             <h4>Voltage</h4>
-                            <select class="battery_voltage select-css" name="battery_volt"
-                                onchange="document.calculator.battery_en.value = eval(document.calculator.battery_volt.value * document.calculator.battery_cap.value / 1000),
-                        document.calculator.carger_curr.value = eval((document.calculator.charge_rate.value * document.calculator.battery_cap.value).toFixed(2))">
+                            <select class="battery_voltage select-css" name="battery_volt">
                                 <option selected value="24">24</option>
                                 <option value="36">36</option>
                                 <option value="48">48</option>
@@ -36,9 +34,7 @@
 
                         <label>
                             <h4>Capacity</h4>
-                            <select class="battery_capacity" name="battery_cap"
-                                onchange="document.calculator.battery_en.value = eval(document.calculator.battery_volt.value * document.calculator.battery_cap.value / 1000),
-                        document.calculator.carger_curr.value = eval((document.calculator.charge_rate.value * document.calculator.battery_cap.value).toFixed(2))">
+                            <select class="battery_capacity" name="battery_cap">
                                 <option selected value="206">206</option>
                                 <option value="412">412</option>
                                 <option value="554">554</option>
@@ -49,16 +45,14 @@
 
                         <label>
                             <h4>Energy</h4>
-                            <input name="battery_en" class="power_batt" type="text" value="4.95" disabled>
-                            <span>kWh</span>
+                            <span class="power_batt">4.94 kWh</span>
                         </label>
                     </div>
                     <h3>Charger</h3>
                     <div class="point">
                         <label>
                             <h4>Charge rate</h4>
-                            <select name="charge_rate"
-                                onchange="document.calculator.carger_curr.value = eval((document.calculator.charge_rate.value * document.calculator.battery_cap.value).toFixed(2))">
+                            <select name="charge_rate" class="charge_rate">
                                 <option selected value="0.1">0.1</option>
                                 <option value="0.2">0.2</option>
                                 <option value="0.5">0.5</option>
@@ -68,8 +62,7 @@
                         </label>
                         <label>
                             <h4>Charge current</h4>
-                            <input name="carger_curr" class="charge_current" type="text" value="20.6" disabled>
-                            <span>A</span>
+                            <span class="charge_current">20.6 A</span>
                         </label>
                     </div>
                     <h3>Truck</h3>
