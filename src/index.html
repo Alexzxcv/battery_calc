@@ -74,14 +74,7 @@
                 </div>
 
                 <div class="stop_time">
-                    <div class="break_info">
-                        <h3 class="breaks">Breaks</h3>
-                        <div class="info_block"><img class="info_item"
-                                data-tooltip="Breaks in work time </br> описание блока" src="img/info.svg" alt="i">
-                        </div>
-                    </div>
-
-                    <div id="tooltip"></div>
+                    <h3 class="breaks">Breaks</h3>
                     <div class="block_row">
                         <div class="block_column">
                             <label>
@@ -96,15 +89,22 @@
                         <span class="plus">+</span>
                     </div>
                     <div class="equel">Calculate</div>
-                    <div class="stash block_column"></div>
+                    <div class="stash block_column">
+                        <div class="post s0"><span class="time_step" id="p0">Start: 12:00 Stop: 13:00</span>
+                            <span class="del" id="d0">&#215;</span>
+                        </div>
+                        <div class="post s1"><span class="time_step" id="p1">Start: 18:00 Stop: 19:00</span>
+                            <span class="del" id="d1">&#215;</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="result">
                     <h3>Statistic</h3>
-                    <h5 class="res_tick">Max SOC:<span class="max_soc">100%</span></h5>
-                    <h5 class="res_tick">Min SOC:<span class="min_soc">31%</span></h5>
-                    <h5 class="res_tick">Working:<span class="working">154.0h</span></h5>
-                    <h5 class="res_tick">Charging:<span class="charging">12.1h</span></h5>
+                    <div class="res_tick">Max SOC:<span class="max_soc">100%</span></div>
+                    <div class="res_tick">Min SOC:<span class="min_soc">31%</span></div>
+                    <div class="res_tick">Working:<span class="working">154.0h</span></div>
+                    <div class="res_tick">Charging:<span class="charging">12.1h</span></div>
                 </div>
             </form>
         </div>

@@ -126,36 +126,6 @@ body {
   padding: 15px;
   min-width: 283px;
 }
-.container__calc .calc .stop_time .break_info {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-.container__calc .calc .stop_time .break_info .info_block {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 20px;
-  min-height: 20px;
-  background-color: white;
-  border-radius: 50%;
-}
-.container__calc .calc .stop_time .break_info .info_block .info_item {
-  width: 17px;
-  height: 17px;
-}
-.container__calc .calc .stop_time #tooltip {
-  z-index: 9999;
-  position: absolute;
-  display: none;
-  top: 0px;
-  left: 0px;
-  background-color: #fff;
-  padding: 5px 10px 5px 10px;
-  color: #000;
-  font-weight: 500;
-  border-radius: 5px;
-}
 .container__calc .calc .stop_time label {
   display: flex;
   flex-direction: row;
@@ -261,14 +231,14 @@ body {
   padding: 15px;
   margin-left: 15px;
 }
-.container__calc .calc .result h5 {
+.container__calc .calc .result .res_tick {
   padding-top: 15px;
   width: 100%;
   line-height: 30px;
   font-size: 20px;
 }
-.container__calc .calc .result h5 span {
-  margin-left: 15px;
+.container__calc .calc .result .res_tick span {
+  display: flex;
   float: right;
 }
 .container__plot {
@@ -279,7 +249,7 @@ body {
 .container__plot .plot_day {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
   height: 330px;
   margin-top: 15px;
@@ -288,14 +258,14 @@ body {
   border-radius: 15px;
 }
 .container__plot .plot_day .containerPlot {
-  width: 940px;
+  width: 960px;
   max-height: 250px;
   color: black;
 }
 .container__plot .plot_trande {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
   height: 330px;
   margin-top: 15px;
@@ -304,7 +274,7 @@ body {
   border-radius: 15px;
 }
 .container__plot .plot_trande .containerPlot {
-  width: 940px;
+  width: 960px;
   max-height: 250px;
   color: black;
 }
