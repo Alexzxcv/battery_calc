@@ -46,49 +46,58 @@
                             <span class="power_batt">4.94 kWh</span>
                         </label>
                     </div>
-                    <h3>Charger</h3>
-                    <div class="point">
-                        <label>
-                            <h4>Charge rate</h4>
-                            <select name="charge_rate" class="charge_rate">
-                                <option value="0.1">0.1</option>
-                                <option value="0.2">0.2</option>
-                                <option selected value="0.5">0.5</option>
-                                <option value="1">1</option>
-                            </select>
-                            <span>C</span>
-                        </label>
-                        <label>
-                            <h4>Charge current</h4>
-                            <span class="charge_current">103.0 A</span>
-                        </label>
-                    </div>
-                    <h3>Truck</h3>
-                    <div class="point last_label">
-                        <label>
-                            <h4>Power consumption</h4>
-                            <input class="power_truck" type="text" value="0.2">
-                            <span>kWh/h</span>
-                        </label>
+                    <div class="block_row">
+                        <div>
+                            <h3>Charger</h3>
+                            <div class="point">
+                                <label>
+                                    <h4>Charge rate</h4>
+                                    <select name="charge_rate" class="charge_rate">
+                                        <option value="0.1">0.1</option>
+                                        <option value="0.2">0.2</option>
+                                        <option selected value="0.5">0.5</option>
+                                        <option value="1">1</option>
+                                    </select>
+                                    <span>C</span>
+                                </label>
+                                <label>
+                                    <h4>Charge current</h4>
+                                    <span class="charge_current">103.0 A</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="last_label">
+                            <h3>Truck</h3>
+                            <div class="point">
+                                <label>
+                                    <h4>Power consumption</h4>
+                                    <input class="power_truck" pattern="\d [0-9]{,3}" type="text" value="0.2">
+                                    <span>kWh/h</span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="stop_time">
-                    <h3 class="breaks">Breaks</h3>
-                    <div class="block_row">
-                        <div class="block_column">
-                            <label>
-                                <span>Start</span>
-                                <input class="start" type="time">
-                            </label>
-                            <label>
-                                <span>Stop</span>
-                                <input class="stop" type="time">
-                            </label>
+                    <div>
+                        <h3 class="breaks">Breaks</h3>
+                        <div class="block_row">
+                            <div class="block_column">
+                                <label>
+                                    <span>Start</span>
+                                    <input class="start" type="time">
+                                </label>
+                                <label>
+                                    <span>Stop</span>
+                                    <input class="stop" type="time">
+                                </label>
+                            </div>
+                            <span class="plus">+</span>
                         </div>
-                        <span class="plus">+</span>
+                        <div class="equel">Calculate</div>
                     </div>
-                    <div class="equel">Calculate</div>
+
                     <div class="stash block_column">
                         <div class="post s0"><span class="time_step" id="p0">Start: 12:00 Stop: 13:00</span>
                             <span class="del" id="d0">&#215;</span>
@@ -99,21 +108,18 @@
                     </div>
                 </div>
 
-                <div class="result">
-                    <h3>Statistic</h3>
-                    <div class="res_tick">Max SOC:<span class="max_soc">100%</span></div>
-                    <div class="res_tick">Min SOC:<span class="min_soc">31%</span></div>
-                    <div class="res_tick">Working:<span class="working">154.0h</span></div>
-                    <div class="res_tick">Charging:<span class="charging">12.1h</span></div>
-                </div>
             </form>
         </div>
         <div class="container__plot">
+            <div class="result">
+                <h3>Statistic</h3>
+                <div class="res_tick">Max SOC:<span class="max_soc">100%</span></div>
+                <div class="res_tick">Min SOC:<span class="min_soc">31%</span></div>
+                <div class="res_tick">Working:<span class="working">154.0h</span></div>
+                <div class="res_tick">Charging:<span class="charging">12.1h</span></div>
+            </div>
             <div class="plot_day">
                 <div class="containerPlot" id="chart"></div>
-            </div>
-            <div class="plot_trande">
-                <div class="containerPlot" id="chartWeek"></div>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>

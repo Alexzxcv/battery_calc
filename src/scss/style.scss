@@ -25,7 +25,6 @@ body {
     justify-content: center;
     background-color: black;
     overflow-y: scroll;
-    margin-top: 50px;
 }
 
 ::-webkit-scrollbar {
@@ -45,6 +44,25 @@ body {
     background: #555;
 }
 
+.block_row {
+    display: flex;
+    flex-direction: row;
+}
+
+.block_column {
+    display: flex;
+    flex-direction: column;
+}
+
+h3 {
+    text-align: left;
+    font-weight: bold;
+    font-size: 20px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.1px;
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -55,15 +73,6 @@ body {
         .calc {
             display: flex;
             flex-direction: row;
-
-            h3 {
-                text-align: left;
-                font-weight: bold;
-                font-size: 20px;
-                letter-spacing: 2px;
-                text-transform: uppercase;
-                letter-spacing: 0.1px;
-            }
 
             h4 {
                 position: relative;
@@ -98,8 +107,9 @@ body {
                 background-color: #1d1c1c;
                 color: white;
                 border-radius: 15px;
-                padding: 0 15px 0 15px;
-                min-width: 450px;
+                width: 50%;
+                padding: 0 15px 15px 15px;
+
 
                 h3 {
                     text-align: left;
@@ -115,6 +125,7 @@ body {
                     display: flex;
                     flex-direction: row;
                     gap: 1rem;
+
                     label {
 
                         span {
@@ -129,19 +140,19 @@ body {
                 }
 
                 .last_label {
-                    margin-bottom: 5px;
+                    padding-left: 15px;
                 }
             }
 
             .stop_time {
                 margin-left: 15px;
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
                 background-color: #1d1c1c;
                 color: white;
                 border-radius: 15px;
                 padding: 15px;
-                min-width: 283px;
+                min-width: 50%;
 
                 label {
                     display: flex;
@@ -149,28 +160,20 @@ body {
                     align-items: center;
                     justify-content: center;
                     padding-top: 15px;
-                    width: 190px;
+                    width: 150px;
 
                     input {
                         margin-left: 10px;
                         margin-right: 10px;
-                        width: 130px;
+                        width: 90px;
                         user-select: none;
                     }
                 }
 
-                .block_row {
-                    display: flex;
-                    flex-direction: row;
-                }
 
-                .block_column {
-                    display: flex;
-                    flex-direction: column;
-                }
 
                 .plus {
-                    width: 100%;
+                    width: 40px;
                     height: 75px;
                     margin-top: 15px;
                     padding: 0;
@@ -216,6 +219,9 @@ body {
                     overflow-y: scroll;
                     max-height: 135px;
                     min-height: 135px;
+                    background-color: #1d1c1c;
+                    color: white;
+                    padding-left: 15px;
 
                     .post {
                         width: 100%;
@@ -231,7 +237,7 @@ body {
 
                         .del {
                             display: inline-block;
-                            min-width: 60px;
+                            min-width: 50px;
                             height: 18px;
                             border: 1px solid rgba(255, 255, 255, 0.3);
                             text-align: center;
@@ -252,69 +258,57 @@ body {
                 }
             }
 
-            .result {
-                display: flex;
-                flex-direction: column;
-                width: 100%;
-                background-color: #1d1c1c;
-                color: white;
-                border-radius: 15px;
-                padding: 15px;
-                margin-left: 15px;
 
-                .res_tick {
-                    padding-top: 15px;
-                    width: 100%;
-                    line-height: 30px;
-                    font-size: 20px;
-
-                    span {
-                        display: flex;
-                        float: right;
-                    }
-                }
-            }
         }
     }
 
     &__plot {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         width: 100%;
+
+        .result {
+            display: flex;
+            flex-direction: column;
+            width: 25%;
+            background-color: #1d1c1c;
+            color: white;
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 15px;
+
+            .res_tick {
+                padding-top: 15px;
+                width: 100%;
+                line-height: 30px;
+                font-size: 20px;
+
+                span {
+                    display: flex;
+                    float: right;
+                }
+            }
+        }
 
         .plot_day {
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            width: 100%;
+            width: 75%;
             height: 330px;
             margin-top: 15px;
+            margin-left: 15px;
+
             background-color: #1d1c1c;
             color: white;
             border-radius: 15px;
 
             .containerPlot {
                 width: 960px;
-                max-height: 250px;
+                height: 100%;
+                padding: 15px 15px 15px 0;
                 color: black;
-            }
-        }
 
-        .plot_trande {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            width: 100%;
-            height: 330px;
-            margin-top: 15px;
-            background-color: #1d1c1c;
-            color: white;
-            border-radius: 15px;
-
-            .containerPlot {
-                width: 960px;
-                max-height: 250px;
-                color: black;
             }
         }
     }

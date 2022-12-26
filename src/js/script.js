@@ -8,6 +8,8 @@ let realTime = new Date();
 let timeZone = realTime.getTimezoneOffset() * 60000;
 let batteryPower = 4.94;
 let chargeCurrent = 103;
+let coordXY = [];
+let coordXYWeek = [];
 
 for (let i = 0; i < buf_array.length; i++) {
     for (let j = 0; j < 2; j++) {
@@ -51,60 +53,24 @@ $('.charge_rate').change(function () {
     });
 });
 
-let coordXY = [
-    { x: 1640995200000, y: 100 },
-    { x: 1641038400000, y: 51.41700404858299 },
-    { x: 1641041895145, y: 100 },
-    { x: 1641042000000, y: 100 },
-    { x: 1641060000000, y: 79.75708502024291 },
-    { x: 1641061456310, y: 100 },
-    { x: 1641063600000, y: 100 },
-    { x: 1641081600000, y: 79.75708502024291 },
-    { x: 1641124800000, y: 31.174089068825907 },
-    { x: 1641128400000, y: 81.21457489878543 },
-    { x: 1641146400000, y: 60.97165991902834 },
-    { x: 1641149207766, y: 100 },
-    { x: 1641150000000, y: 100 },
-    { x: 1641168000000, y: 79.75708502024291 },
-    { x: 1641211200000, y: 31.174089068825907 },
-    { x: 1641214800000, y: 81.21457489878543 },
-    { x: 1641232800000, y: 60.97165991902834 },
-    { x: 1641235607766, y: 100 },
-    { x: 1641236400000, y: 100 },
-    { x: 1641254400000, y: 79.75708502024291 },
-    { x: 1641297600000, y: 31.174089068825907 },
-    { x: 1641301200000, y: 81.21457489878543 },
-    { x: 1641319200000, y: 60.97165991902834 },
-    { x: 1641322007766, y: 100 },
-    { x: 1641322800000, y: 100 },
-    { x: 1641340800000, y: 79.75708502024291 },
-    { x: 1641384000000, y: 31.174089068825907 },
-    { x: 1641387600000, y: 81.21457489878543 },
-    { x: 1641405600000, y: 60.97165991902834 },
-    { x: 1641408407766, y: 100 },
-    { x: 1641409200000, y: 100 },
-    { x: 1641427200000, y: 79.75708502024291 },
-    { x: 1641470400000, y: 31.174089068825907 },
-    { x: 1641474000000, y: 81.21457489878543 },
-    { x: 1641492000000, y: 60.97165991902834 },
-    { x: 1641494807766, y: 100 },
-    { x: 1641495600000, y: 100 },
-    { x: 1641513600000, y: 79.75708502024291 },
-    { x: 1641556800000, y: 31.174089068825907 },
-    { x: 1641560400000, y: 81.21457489878543 },
-    { x: 1641578400000, y: 60.97165991902834 },
-    { x: 1641581207766, y: 100 },
-    { x: 1641582000000, y: 100 },
-    { x: 1641600000000, y: 79.75708502024291 },];
-let coordXYWeek = [
-    { x: 1640995200000, y: 100 },
-    { x: 1641081600000, y: 79.75708502024291 },
-    { x: 1641168000000, y: 79.75708502024291 },
-    { x: 1641254400000, y: 79.75708502024291 },
-    { x: 1641340800000, y: 79.75708502024291 },
-    { x: 1641427200000, y: 79.75708502024291 },
-    { x: 1641513600000, y: 79.75708502024291 },
-    { x: 1641600000000, y: 79.75708502024291 },];
+function deleteTime() {
+    bufArrayXY.splice(0, bufArrayXY.length);
+    bufArrayXY.push(+firstTime);
+    const clickId = $(this).attr('id').substring(1);
+    $(`#p${clickId}, #d${clickId}, .s${clickId}`).remove();
+    buf_array[clickId] = '';
+    for (let i = 0; i < buf_array.length; i++) {
+        for (let j = 0; j < 2; j++) {
+            if (buf_array[i] === '') {
+                continue;
+            }
+            else {
+                bufArrayXY.push(buf_array[i][j] + ~timeZone);
+            }
+        }
+    }
+}
+
 let options = {
     chart: {
         height: 300,
@@ -113,6 +79,7 @@ let options = {
         animations: {
             initialAnimation: { enabled: false }
         },
+        
         toolbar: {
             show: true,
             tools: {
@@ -126,13 +93,45 @@ let options = {
                 customIcons: []
             },
         },
-
+        events: {
+            beforeZoom: (e, { xaxis }) => {
+                console.log(e);
+                let minE = e.maxX - e.minX;
+                let maxZoom = xaxis.max - xaxis.min;
+                if (maxZoom <= minE)
+                    return {
+                        xaxis: {
+                            min: xaxis.min,
+                            max: xaxis.max 
+                        }
+                    };
+                else {
+                    return {
+                        xaxis: {
+                            min: +new Date('1.1.2022 00:00 +0'),
+                            max: +new Date('1.8.2022 00:00 +0')
+                        }
+                    }
+                }
+            }
+        }
+    },
+    
+    tooltip: {
+        x: {
+            format: 'd hh:mm',
+        },
     },
     series: [
         {
             name: 'SOC',
             data: '',
+            
         },
+        {
+            name: 'Trande',
+            data: '',
+        }
     ],
     stroke: {
         curve: 'straight',
@@ -156,8 +155,8 @@ let options = {
     },
     xaxis: {
         type: "datetime",
-        min: 1640995200000,
-        max: 1641600000000,
+        min: +new Date('1.1.2022 00:00 +0'),
+        max: +new Date('1.8.2022 00:00 +0'),
         labels: {
             show: true,
             style: {
@@ -169,33 +168,29 @@ let options = {
             },
         },
     },
+    legend: {
+        show: true,
+        labels: {
+            colors: '#fff',
+        },
+    },
 };
 
 let chart = new ApexCharts(document.querySelector("#chart"), options);
 chart.render();
 
-let chartWeek = new ApexCharts(document.querySelector("#chartWeek"), options);
-chartWeek.render();
+creatYCoord(coordXY, coordXYWeek, bufArrayXY);
+createPlotDay();
 
-chart.updateSeries([{
-    data: coordXY,
-}]);
-
-chartWeek.updateSeries([{
-    data: coordXYWeek,
-}]);
-
-function createPlotDay(coordXY, chart) {
+function createPlotDay() {
     chart.updateSeries([{
         data: coordXY,
-    }])
+    }, {
+        data: coordXYWeek,
+    }]);
 }
 
-function createPlotWeek(coordXYWeek, chartWeek) {
-    chartWeek.updateSeries([{
-        data: coordXYWeek,
-    }])
-}
+$('.del').click(deleteTime);
 
 $('.plus').click(function () {
     const stash = $('.stash');
@@ -221,25 +216,7 @@ $('.plus').click(function () {
     stash.append(stash_block);
     buf_array.push([+start_time_parse, +stop_time_parse]);
     countID++;
-    $('.del').click(function () {
-        bufArrayXY.splice(0, bufArrayXY.length);
-        bufArrayXY.push(+firstTime);
-        const clickId = $(this).attr('id').substring(1);
-        $(`#p${clickId}, #d${clickId}, .s${clickId}`).remove();
-        buf_array[clickId] = '';
-        for (let i = 0; i < buf_array.length; i++) {
-            for (let j = 0; j < 2; j++) {
-                if (buf_array[i] === '') {
-                    continue;
-                }
-                else {
-                    bufArrayXY.push(buf_array[i][j] + ~timeZone);
-                }
-            }
-        }
-        console.log(buf_array);
-        console.log(bufArrayXY);
-    });
+    $('.del').click(deleteTime);
 });
 
 function creatYCoord(coordXY, coordXYWeek, bufArrayXY) {
@@ -257,7 +234,7 @@ function creatYCoord(coordXY, coordXYWeek, bufArrayXY) {
     let timeCharging = 0;   //время заряда
     let shiftDay = 0;       //сдвиг дня
     let lastTime = new Date('1.2.2022 00:00 +0');
-    let startTimeH = new Date('1.1.2022 00:00 +0');     //время начала паузы
+    let startTimeH = new Date('1.1.2022 00:00 +0');   //время начала паузы
     let stopTimeH = new Date('1.2.2022 00:00 +0');      //время конца паузы
     newYcoordPercent = newYcoord / (batteryPower / 100);
     if (newYcoordPercent > max) {
@@ -395,26 +372,6 @@ function creatYCoord(coordXY, coordXYWeek, bufArrayXY) {
     });
 }
 
-$('.del').click(function () {
-    bufArrayXY.splice(0, bufArrayXY.length);
-    bufArrayXY.push(+firstTime);
-    const clickId = $(this).attr('id').substring(1);
-    $(`#p${clickId}, #d${clickId}, .s${clickId}`).remove();
-    buf_array[clickId] = '';
-    for (let i = 0; i < buf_array.length; i++) {
-        for (let j = 0; j < 2; j++) {
-            if (buf_array[i] === '') {
-                continue;
-            }
-            else {
-                bufArrayXY.push(buf_array[i][j] + ~timeZone);
-            }
-        }
-    }
-    console.log(buf_array);
-    console.log(bufArrayXY);
-});
-
 $('.equel').click(function () {
     bufArrayXY.splice(0, bufArrayXY.length);
     bufArrayXY.push(+firstTime);
@@ -428,11 +385,6 @@ $('.equel').click(function () {
             }
         }
     }
-    console.log(buf_array);
-    console.log(bufArrayXY);
     creatYCoord(coordXY, coordXYWeek, bufArrayXY);
-    createPlotDay(coordXY, chart);
-    createPlotWeek(coordXYWeek, chartWeek);
-    // bufArrayXY.splice(0, bufArrayXY.length);
-    // buf_array.splice(0, buf_array.length);
+    createPlotDay();
 });
