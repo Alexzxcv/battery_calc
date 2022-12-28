@@ -108,7 +108,7 @@ let options = {
                 else {
                     return {
                         xaxis: {
-                            min: +new Date('1.1.2022 00:00 +0'),
+                            min: +new Date('12.31.2021 22:00 +0'),
                             max: +new Date('1.8.2022 00:00 +0')
                         }
                     }
@@ -118,6 +118,10 @@ let options = {
     },
     
     tooltip: {
+        enabled: true,
+        inverseOrder: true,
+        shared: true,
+      followCursor: false,
         x: {
             format: 'd hh:mm',
         },
@@ -129,7 +133,7 @@ let options = {
             
         },
         {
-            name: 'Trande',
+            name: 'Trand',
             data: '',
         }
     ],
@@ -155,7 +159,7 @@ let options = {
     },
     xaxis: {
         type: "datetime",
-        min: +new Date('1.1.2022 00:00 +0'),
+        min: +new Date('12.31.2021 22:00 +0'),
         max: +new Date('1.8.2022 00:00 +0'),
         labels: {
             show: true,

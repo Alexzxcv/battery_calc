@@ -24,7 +24,6 @@ body {
     align-items: center;
     justify-content: center;
     background-color: black;
-    overflow-y: scroll;
 }
 
 ::-webkit-scrollbar {
@@ -217,11 +216,10 @@ h3 {
 
                 .stash {
                     overflow-y: scroll;
-                    max-height: 135px;
-                    min-height: 135px;
+                    max-height: 217px;
                     background-color: #1d1c1c;
                     color: white;
-                    padding-left: 15px;
+                    padding-left: 30px;
 
                     .post {
                         width: 100%;
@@ -305,8 +303,8 @@ h3 {
 
             .containerPlot {
                 width: 960px;
-                height: 100%;
-                padding: 15px 15px 15px 0;
+                height: 90%;
+
                 color: black;
 
             }
