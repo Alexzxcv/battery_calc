@@ -13,7 +13,7 @@ let coordXYWeek = [];
 
 for (let i = 0; i < buf_array.length; i++) {
     for (let j = 0; j < 2; j++) {
-        bufArrayXY.push(buf_array[i][j] + ~timeZone);
+        bufArrayXY.push(buf_array[i][j] + 1 + ~timeZone);
     }
 }
 
@@ -82,7 +82,7 @@ function deleteTime() {
                 continue;
             }
             else {
-                bufArrayXY.push(buf_array[i][j] + ~timeZone);
+                bufArrayXY.push(buf_array[i][j] + 1 + ~timeZone);
             }
         }
     }
@@ -366,7 +366,7 @@ function creatYCoord(coordXY, coordXYWeek, bufArrayXY) {
         }
     }
 
-    
+
 
     $('.working').text(function () {
         timeWorking = timeWorking / 168 * 100;
@@ -397,7 +397,7 @@ $('.equel').click(function () {
                 continue;
             }
             else {
-                bufArrayXY.push(buf_array[i][j] + ~timeZone);
+                bufArrayXY.push(buf_array[i][j] + 1 + ~timeZone);
             }
         }
     }
