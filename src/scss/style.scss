@@ -43,9 +43,17 @@ body {
     background: #555;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0; 
+}
+
 .block_row {
     display: flex;
     flex-direction: row;
+    gap: 1rem;
+
 }
 
 .block_column {
@@ -126,7 +134,6 @@ h3 {
                     gap: 1rem;
 
                     label {
-
                         span {
                             display: flex;
                             align-items: center;
@@ -168,8 +175,6 @@ h3 {
                         user-select: none;
                     }
                 }
-
-
 
                 .plus {
                     width: 40px;
@@ -219,7 +224,8 @@ h3 {
                     max-height: 217px;
                     background-color: #1d1c1c;
                     color: white;
-                    padding-left: 30px;
+                    padding-left: 15px;
+                    margin-top: 15px;
 
                     .post {
                         width: 100%;
@@ -227,6 +233,7 @@ h3 {
                         margin-top: 15px;
                         display: flex;
                         flex-direction: row;
+                        align-items: center;
 
                         .time_step {
                             display: inline-block;
@@ -296,7 +303,7 @@ h3 {
             height: 330px;
             margin-top: 15px;
             margin-left: 15px;
-
+            padding-right: 15px;
             background-color: #1d1c1c;
             color: white;
             border-radius: 15px;
