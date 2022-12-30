@@ -234,6 +234,11 @@ $('.plus').click(function () {
             }
         }
     }
+    for (let i = 0; i < buf_array.length; i++) {
+            if ((+(new Date(`1.1.2022 ${start_time}`)) < buf_array[i][0]) && (+(new Date(`1.1.2022 ${stop_time}`)) > buf_array[i][1])) {
+                return;
+            }
+    }
     const stash_block = `<div class="post s${countID}"><span class="time_step" id="p${countID}">${start_time} - ${stop_time}</span>
     <span class="del" id="d${countID}">&#215;</span></div>`;
     stash.append(stash_block);
