@@ -234,7 +234,7 @@ $('.plus').click(function () {
             }
         }
     }
-    const stash_block = `<div class="post s${countID}"><span class="time_step" id="p${countID}">${start_time} | ${stop_time}</span>
+    const stash_block = `<div class="post s${countID}"><span class="time_step" id="p${countID}">${start_time} - ${stop_time}</span>
     <span class="del" id="d${countID}">&#215;</span></div>`;
     stash.append(stash_block);
     buf_array.push([+start_time_parse, +stop_time_parse]);

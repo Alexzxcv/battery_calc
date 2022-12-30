@@ -81,11 +81,11 @@ h3 {
   position: relative;
   min-width: 100%;
   text-align: left;
-  padding: 15px 0 5px 3px;
+  padding: 15px 0 10px 3px;
 }
 .container__calc .calc select,
 .container__calc .calc input {
-  width: 100px;
+  width: 80px;
   height: 30px;
   background-color: rgba(0, 0, 0, 0.3137254902);
   border-radius: 8px;
@@ -102,13 +102,20 @@ h3 {
   background-color: #1d1c1c;
 }
 .container__calc .calc .battery_stat {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   background-color: #1d1c1c;
   color: white;
   border-radius: 15px;
   width: 50%;
   padding: 0 15px 15px 15px;
+  align-items: center;
+}
+.container__calc .calc .battery_stat .grid1 {
+  grid-column: span 3;
+}
+.container__calc .calc .battery_stat .grid2 {
+  grid-column: span 2;
 }
 .container__calc .calc .battery_stat h3 {
   text-align: left;
@@ -119,20 +126,15 @@ h3 {
   letter-spacing: 0.1px;
   padding-top: 15px;
 }
-.container__calc .calc .battery_stat .point {
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
+.container__calc .calc .battery_stat span {
+  padding-left: 5px;
 }
-.container__calc .calc .battery_stat .point label span {
+.container__calc .calc .battery_stat .param {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  line-height: 30px;
-  padding: 0 5px 0 5px;
 }
-.container__calc .calc .battery_stat .last_label {
-  padding-left: 15px;
+.container__calc .calc .battery_stat .param span {
+  padding-left: 5px;
 }
 .container__calc .calc .stop_time {
   margin-left: 15px;
@@ -154,12 +156,12 @@ h3 {
 }
 .container__calc .calc .stop_time label input {
   margin-left: 10px;
-  margin-right: 10px;
+  margin-right: 0px;
   width: 90px;
   user-select: none;
 }
 .container__calc .calc .stop_time .plus {
-  width: 40px;
+  min-width: 50px;
   height: 75px;
   margin-top: 15px;
   padding: 0;
@@ -204,22 +206,18 @@ h3 {
   color: white;
   padding-left: 15px;
   margin-top: 15px;
+  min-width: 50%;
 }
 .container__calc .calc .stop_time .stash .post {
-  width: 100%;
   padding-left: 2px;
   margin-top: 15px;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: end;
+  justify-content: space-around;
   text-align: center;
 }
-.container__calc .calc .stop_time .stash .post .time_step {
-  display: inline-block;
-  width: 190px;
-}
 .container__calc .calc .stop_time .stash .post .del {
-  display: inline-block;
   min-width: 50px;
   height: 18px;
   border: 1px solid rgba(255, 255, 255, 0.3);

@@ -87,12 +87,12 @@ h3 {
                 position: relative;
                 min-width: 100%;
                 text-align: left;
-                padding: 15px 0 5px 3px;
+                padding: 15px 0 10px 3px;
             }
 
             select,
             input {
-                width: 100px;
+                width: 80px;
                 height: 30px;
                 background-color: #00000050;
                 border-radius: 8px;
@@ -111,15 +111,20 @@ h3 {
 
             .battery_stat {
 
-                display: flex;
-                flex-direction: column;
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
                 background-color: #1d1c1c;
                 color: white;
                 border-radius: 15px;
                 width: 50%;
                 padding: 0 15px 15px 15px;
-
-
+                align-items: center;
+                .grid1 {
+                    grid-column: span 3;
+                }
+                .grid2 {
+                    grid-column: span 2;
+                }
                 h3 {
                     text-align: left;
                     font-weight: bold;
@@ -129,26 +134,15 @@ h3 {
                     letter-spacing: 0.1px;
                     padding-top: 15px;
                 }
-
-                .point {
-                    display: flex;
-                    flex-direction: row;
-                    gap: 1rem;
-
-                    label {
-                        span {
-                            display: flex;
-                            align-items: center;
-                            justify-content: flex-start;
-                            line-height: 30px;
-                            padding: 0 5px 0 5px;
-                        }
-                    }
-
+                span {
+                    padding-left: 5px;
                 }
-
-                .last_label {
-                    padding-left: 15px;
+                .param {
+                    display: flex;
+                    align-items: center;
+                    span {
+                        padding-left: 5px;
+                    }
                 }
             }
 
@@ -172,14 +166,14 @@ h3 {
 
                     input {
                         margin-left: 10px;
-                        margin-right: 10px;
+                        margin-right: 0px;
                         width: 90px;
                         user-select: none;
                     }
                 }
 
                 .plus {
-                    width: 40px;
+                    min-width: 50px;
                     height: 75px;
                     margin-top: 15px;
                     padding: 0;
@@ -228,22 +222,18 @@ h3 {
                     color: white;
                     padding-left: 15px;
                     margin-top: 15px;
+                    min-width: 50%;
+
 
                     .post {
-                        width: 100%;
                         padding-left: 2px;
                         margin-top: 15px;
                         display: flex;
                         flex-direction: row;
-                        align-items: center;
+                        align-items: end;
+                        justify-content: space-around;
                         text-align: center;
-                        .time_step {
-                            display: inline-block;
-                            width: 190px;
-                        }
-
                         .del {
-                            display: inline-block;
                             min-width: 50px;
                             height: 18px;
                             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -256,7 +246,6 @@ h3 {
                             line-height: 16px;
                             cursor: pointer;
                             user-select: none;
-
                             &:hover {
                                 animation: white_black 0.2s both;
                             }
