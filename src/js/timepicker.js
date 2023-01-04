@@ -23,9 +23,9 @@ var bstptid = '';
 	}, s.bindEvent = function () {
 		var t = this;
 		t.hasBind || (t.hasBind = !0, this.content.on("click", ".js-minus-minute", function () {
-			t.minute <= 0 ? t.minute = 59 : t.minute--, t.update()
+			t.minute <= 15 ? t.minute = 0 : t.minute = t.minute-15, t.update()
 		}).on("click", ".js-plus-minute", function () {
-			t.minute >= 59 ? t.minute = 0 : t.minute++, t.update()
+			t.minute >= 45 ? t.minute = 59 : t.minute = t.minute+15, t.update()
 		}).on("click", ".js-plus-houer", function () {
 			t.hour >= 23 ? t.hour = 0 : t.hour++, t.update()
 		}).on("click", ".js-minus-houer", function () {
