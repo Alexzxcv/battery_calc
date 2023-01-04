@@ -169,6 +169,9 @@ h3 {
                         margin-right: 0px;
                         width: 90px;
                         user-select: none;
+                        &:focus {
+                            box-shadow: 0px 0px 5px white;
+                        }
                     }
                 }
 

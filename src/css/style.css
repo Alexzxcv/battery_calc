@@ -160,6 +160,9 @@ h3 {
   width: 90px;
   user-select: none;
 }
+.container__calc .calc .stop_time label input:focus {
+  box-shadow: 0px 0px 5px white;
+}
 .container__calc .calc .stop_time .plus {
   min-width: 50px;
   height: 75px;

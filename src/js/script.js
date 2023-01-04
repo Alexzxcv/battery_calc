@@ -56,7 +56,7 @@ $('.charge_rate').change(function () {
 const input = document.querySelector('.power_truck');
 
 input.addEventListener('input', () => {
-    let inputValue = input.value.replace(/[-,+,=]/g, '');
+    let inputValue = input.value.replace(/[^0-9\.\,]/g, '');
     input.value = inputValue;
 
     if (input.value.length === 9) {
