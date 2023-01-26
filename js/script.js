@@ -42,6 +42,10 @@ $('.charge_current').change(function () {
     equel ();
 });
 
+$('.consumption').change(function () {
+    equel ();
+});
+
 $('.power_truck').change(function () {
     if ($('.power_truck').val() === "custom") {
         $('.consumption').removeAttr('disabled');
